@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">Cadastro Produto</string>
+    <string name="app_name">DDM Produto</string>
+    <string name="app_full_name">DDM Consulta Produtos</string>
+
+    <string name="content_main_pesquisar_produto">Pesquisar Produto</string>
+    <string name="nenhum_produto_encontrado">Nenhum produto encontrado.</string>
+    <string name="cliqueprodutodesejadoverdetalhes">Clique no produto desejado para visualizar seus detalhes.</string>
+    <string name="erroobterprodutos">Erro ao obter produtos</string>
+    <string name="gravado">Gravado</string>
+    <string name="erroreturntelaatz">Erro! Não foi possível capturar retorno da tela de atualização.</string>
+    <string name="produtosatzsucesso">Produtos atualizados com sucesso.</string>
+    <string name="atznaorealizada">Atualização não realizada.</string>
+    <string name="produtoscarregadosdopropriocelular">Produtos carregados do próprio celular.</string>
+    <string name="senhaincorreta">Senha incorreta!</string>
+
+    <string name="menu_atualiza_produtos">Atualiza Produtos</string>
+    <string name="atualizacao_produtos">Atualização de Produtos</string>
+    <string name="menu_configuracao">Configurações</string>
+    <string name="menu_sobre">Sobre o App</string>
+    <string name="menu_sair">Sair do App</string>
+
+    <string name="msgmatzwifi">A atualização deve ser feita somente pela rede Wi-fi.</string>
+    <string name="msgmdtultatz">Data da última atualização indefinida.</string>
+
+    <string name="sobre">Sobre</string>
+    <string name="site">http://www.ddm.com.br</string>
+    <string name="email">contato@ddm.com.br</string>
+    <string name="versao">Versão</string>
 </resources>
