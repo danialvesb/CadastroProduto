@@ -14,7 +14,7 @@
     <string name="senhaincorreta">Senha incorreta!</string>
     <string name="dtentrada">Data e hora de entrada:</string>
     <string name="dtsaida">Data e hora de saída:</string>
-    <string name="senhaincorreta">Senha incorreta!</string>
+    <string name="cadastroproduto">Modulo cadastro de Produto</string>
     <string name="movimentacaoproduto">Movimentações do produto</string>
     <string name="tproduto">Nome</string>
     <string name="valorproduto">Preço:</string>
@@ -33,4 +33,10 @@
     <string name="site">http://www.ddm.com.br</string>
     <string name="email">contato@ddm.com.br</string>
     <string name="versao">Versão</string>
+    <string name="dttimei">Infome data e hora de entrada</string>
+    <string name="eani">Código de Barras</string>
+    <string name="inomeproduto">Nome do Produto:</string>
+    <string name="inameproduto">Nome Produto</string>
+    <string name="descricaoproduto">Descrição:</string>
+    <string name="salvarproduto">Salvar</string>
 </resources>

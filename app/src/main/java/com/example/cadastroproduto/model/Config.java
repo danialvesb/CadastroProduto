@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Config extends AppCompatActivity {
 
-    private int porta;
+    private Integer porta;
     private String ip;
 
     public int getPorta() {
