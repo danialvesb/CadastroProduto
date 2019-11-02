@@ -12,6 +12,13 @@
     <string name="atznaorealizada">Atualização não realizada.</string>
     <string name="produtoscarregadosdopropriocelular">Produtos carregados do próprio celular.</string>
     <string name="senhaincorreta">Senha incorreta!</string>
+    <string name="dtentrada">Data e hora de entrada:</string>
+    <string name="dtsaida">Data e hora de saída:</string>
+    <string name="senhaincorreta">Senha incorreta!</string>
+    <string name="movimentacaoproduto">Movimentações do produto</string>
+    <string name="tproduto">Nome</string>
+    <string name="valorproduto">Preço:</string>
+
 
     <string name="menu_atualiza_produtos">Atualiza Produtos</string>
     <string name="atualizacao_produtos">Atualização de Produtos</string>
