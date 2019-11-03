@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CadastroProdutosActivity extends AppCompatActivity {
-    List<Produto> listProdutos = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +27,11 @@ public class CadastroProdutosActivity extends AppCompatActivity {
             View vDtEntrada = findViewById(R.id.inputDtTimeId);
             View vPreco = findViewById(R.id.inputValorId);
             View vDescricao = findViewById(R.id.inputDescricaoProId);
+
+            Produto produto = new Produto();
+            produto.setNome(vNome.toString());
+            produto.setDescricao(vDescricao.toString());
+            produto.setPreco(Double.parseDouble(vPreco.toString()));
 
 
         } catch (Exception e) {
