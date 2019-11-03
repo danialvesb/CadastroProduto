@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class Produto implements Serializable {
     private String nome;
     private String dtEntrada;
-    private String dtSaida;
+    private String dtSaida = null;
     private Double preco;
-    private String fotoPath;
+    private String fotoPath = null;
     private String descricao;
-    private String codBarra;
+    private String codBarra = null;
 
     public String getDtEntrada() {
         return dtEntrada;
