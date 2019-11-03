@@ -27,7 +27,7 @@ public class Produto implements Serializable {
         this.dtSaida = dtSaida;
     }
 
-    public void setPreco(Integer id) {
+    public void setPreco(Double id) {
         this.preco = preco;
     }
 
