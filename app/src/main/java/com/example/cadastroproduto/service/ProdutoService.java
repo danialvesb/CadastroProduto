@@ -25,27 +25,29 @@ public class ProdutoService {
         boolean bGet = false;
         String json = "";
         String mensagem2 = "";
-        String networkType = NetworkType.getNetworkClass(MyApp.getContext());
+//        String networkType = NetworkType.getNetworkClass(MyApp.getContext());
 
-        String sServidorIP = ConfigSharedPreferences.getString(MyApp.getContext(), "cfgServidorIP");
+//        String sServidorIP = ConfigSharedPreferences.getString(MyApp.getContext(), "cfgServidorIP");
+        String sServidorIP = "192.168.3.9";
         // Log.w("DDM - Log Sandro", "sServidorIP = " + sServidorIP);
 
-        if (networkType.equals("-") || !networkType.equals("WIFI")) {
-            String mensagem = (networkType.equals("-") ? "Sem conexão com a Internet." : "Conexão " + networkType);
 
-            if (sServidorIP != null && !sServidorIP.isEmpty())
-                mensagem2 = MyApp.getContext().getResources().getString(R.string.produtoscarregadosdopropriocelular);
-
-            Toast.makeText(MyApp.getContext(), mensagem + "\n" + mensagem2, Toast.LENGTH_LONG).show();
-            isForcarAtualizacao = false;
-        }
+//        if (networkType.equals("-") || !networkType.equals("WIFI")) {
+//            String mensagem = (networkType.equals("-") ? "Sem conexão com a Internet." : "Conexão " + networkType);
+//
+//            if (sServidorIP != null && !sServidorIP.isEmpty())
+//                mensagem2 = MyApp.getContext().getResources().getString(R.string.produtoscarregadosdopropriocelular);
+//
+//            Toast.makeText(MyApp.getContext(), mensagem + "\n" + mensagem2, Toast.LENGTH_LONG).show();
+//            isForcarAtualizacao = false;
+//        }
 
         if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
-            json = helper.doGet("http://" + sServidorIP + "/ddm-produtos.json");
+            json = helper.doGet("http://" + sServidorIP + "/produtos");
             bGet = true;
         } else {
-            json = getJsonConfiguracao();
+//            json = getJsonConfiguracao();
         }
 
         if (json == null || json.isEmpty()) {
@@ -62,8 +64,8 @@ public class ProdutoService {
             }
             else {
                 if (bGet) {
-                    ConfigSharedPreferences.setString(MyApp.getContext(), "cfgJsonProdutos", json);
-                    ConfigSharedPreferences.setString(MyApp.getContext(), "cfgDtUltAtz", DateUtil.DataDMY());
+//                    ConfigSharedPreferences.setString(MyApp.getContext(), "cfgJsonProdutos", json);
+//                    ConfigSharedPreferences.setString(MyApp.getContext(), "cfgDtUltAtz", DateUtil.DataDMY());
                 }
             }
         }
@@ -71,19 +73,19 @@ public class ProdutoService {
         return produtos;
     }
 
-    private static String getJsonConfiguracao() {
-        String json = ConfigSharedPreferences.getString(MyApp.getContext(), "cfgJsonProdutos");
-        return json;
-    }
+//    private static String getJsonConfiguracao() {
+//        String json = ConfigSharedPreferences.getString(MyApp.getContext(), "cfgJsonProdutos");
+//        return json;
+//    }
 
     public static List<Produto> getListaProdutosConfiguracao() throws IOException {
         List<Produto> produtos = null;
 
-        String json = getJsonConfiguracao();
+        String json = null;
 
-        if (json == null || json.isEmpty()) {
-            throw new IOException("Nenhum produto cadastrado no celular.");
-        }
+//        if (json == null || json.isEmpty()) {
+//            throw new IOException("Nenhum produto cadastrado no celular.");
+//        }
 
         produtos = parserJSON(json);
 
@@ -102,9 +104,12 @@ public class ProdutoService {
                 JSONObject jsonProduto = jsonProdutos.getJSONObject(i);
                 Produto p = new Produto();
 
-                p.setEan(jsonProduto.optString("ean"));
+                p.setNome(jsonProduto.optString("nome"));
                 p.setDescricao(jsonProduto.optString("descricao"));
-                p.setPcovenda(jsonProduto.optDouble("pcovenda"));
+                p.setPreco(jsonProduto.optDouble("valor"));
+                p.setDtEntrada(jsonProduto.getString("dtEntrada"));
+                p.setPreco(jsonProduto.optDouble("valor"));
+                p.setPreco(jsonProduto.optDouble("valor"));
 
                 produtos.add(p);
             }
@@ -114,4 +119,10 @@ public class ProdutoService {
 
         return produtos;
     }
+
+    public void salvarProdutos() {
+
+    }
+
+
 }
