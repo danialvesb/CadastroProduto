@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import ddm.com.br.ddm_consulta_produto.MyApp;
-//import ddm.com.br.ddm_consulta_produto.R;
+
+
+import com.example.cadastroproduto.MyApp;
+import com.example.cadastroproduto.R;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.utils.ConfigSharedPreferences;
 import com.example.cadastroproduto.utils.DateUtil;
@@ -102,9 +104,9 @@ public class ProdutoService {
                 JSONObject jsonProduto = jsonProdutos.getJSONObject(i);
                 Produto p = new Produto();
 
-                p.setEan(jsonProduto.optString("ean"));
+//                p.setEan(jsonProduto.optString("ean"));
                 p.setDescricao(jsonProduto.optString("descricao"));
-                p.setPcovenda(jsonProduto.optDouble("pcovenda"));
+                p.setPreco(jsonProduto.optDouble("pcovenda"));
 
                 produtos.add(p);
             }
