@@ -1,10 +1,12 @@
 package com.example.cadastroproduto.utils;
 
+import com.example.cadastroproduto.MyApp;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import ddm.com.br.ddm_consulta_produto.MyApp;
+
 
 public class DateUtil {
     public static String DataDMY() {
