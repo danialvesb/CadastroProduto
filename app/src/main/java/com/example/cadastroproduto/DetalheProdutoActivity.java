@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
 //        textViewEan.setText("Código " + produto.getEan().toString());
         textViewDescricao.setText(produto.getDescricao() + " : ");
-        textViewPcoVenda.setText("R$ " + MoedaUtil.moeda2Decimais(produto.get()));
+        textViewPcoVenda.setText("R$ " + MoedaUtil.moeda2Decimais(produto.getPreco()));
 
         getSupportActionBar().setTitle(produto.getDescricao());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
