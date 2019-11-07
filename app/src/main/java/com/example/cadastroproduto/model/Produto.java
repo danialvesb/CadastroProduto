@@ -13,6 +13,14 @@ public class Produto implements Serializable {
 
     public Produto() {}
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public String getDtEntrada() {
         return dtEntrada;
     }
@@ -22,31 +30,19 @@ public class Produto implements Serializable {
     }
 
     public String getDtSaida() {
-        return getDtSaida();
+        return dtSaida;
     }
 
     public void setDtSaida(String dtSaida) {
         this.dtSaida = dtSaida;
     }
 
-    public void setPreco(Double id) {
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
         this.preco = preco;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getFotoPath() {
@@ -57,6 +53,14 @@ public class Produto implements Serializable {
         this.fotoPath = fotoPath;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public String getCodBarra() {
         return codBarra;
     }
@@ -64,5 +68,4 @@ public class Produto implements Serializable {
     public void setCodBarra(String codBarra) {
         this.codBarra = codBarra;
     }
-
 }
