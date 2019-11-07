@@ -11,6 +11,8 @@ public class Produto implements Serializable {
     private String descricao;
     private String codBarra = null;
 
+    public Produto() {}
+
     public String getDtEntrada() {
         return dtEntrada;
     }

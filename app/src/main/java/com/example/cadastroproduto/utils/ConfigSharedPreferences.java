@@ -33,3 +33,10 @@ public class ConfigSharedPreferences {
         return b;
     }
 }
+
+// Entendendo as SharedPreferences
+// As SharedPreferences consiste em uma interface que permite acessar e modificar
+// dados de preferência de usuário. O valor armazenado apresenta-se sob formato chave-valor ou
+// key-value, ou seja, cada preferência armazenada possui uma identificação ou chave e associada
+// a ela está um valor. Ela permite armazenamento de diversos tipos de valor, como int, float, Strings,
+// booleans e sets de Strings.

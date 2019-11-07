@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import ddm.com.br.ddm_consulta_produto.MyApp;
+
+import com.example.cadastroproduto.MyApp;
 
 public class DateUtil {
     public static String DataDMY() {
