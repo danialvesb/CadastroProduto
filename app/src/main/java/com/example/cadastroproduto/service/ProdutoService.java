@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.example.cadastroproduto.MyApp;
 import com.example.cadastroproduto.R;
 import com.example.cadastroproduto.model.Produto;
