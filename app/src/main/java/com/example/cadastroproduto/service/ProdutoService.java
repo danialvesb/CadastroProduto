@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import com.example.cadastroproduto.MyApp;
 import com.example.cadastroproduto.R;
 import com.example.cadastroproduto.model.Produto;
@@ -44,7 +42,7 @@ public class ProdutoService {
 
         if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
-            json = helper.doGet("http://" + sServidorIP + "/ddm-produtos.json");
+            json = helper.doGet("http://" + sServidorIP + "/produtos");
             bGet = true;
         } else {
             json = getJsonConfiguracao();
@@ -94,7 +92,7 @@ public class ProdutoService {
 
     private static List<Produto> parserJSON(String json) {
         List<Produto> produtos = new ArrayList<>();
-
+        ///JSONObject converte string em json
         try {
             JSONObject root = new JSONObject(json);
             JSONObject obj = root.getJSONObject("produtos");
@@ -105,6 +103,7 @@ public class ProdutoService {
                 Produto p = new Produto();
 
 //                p.setEan(jsonProduto.optString("ean"));
+
                 p.setDescricao(jsonProduto.optString("descricao"));
                 p.setPreco(jsonProduto.optDouble("pcovenda"));
 
