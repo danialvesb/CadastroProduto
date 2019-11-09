@@ -50,22 +50,24 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
-        // getSupportActionBar().setTitle(getString(R.string.app_full_name));
+        getSupportActionBar().setTitle(getString(R.string.app_full_name));
 
+        /*
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivityForResult(intent, 14);
-                // Snackbar.make(view, "Leitor de código barras não disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                // Snackbar.make(view, "Leitor de código barras nã o disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
-
+        */
         list = findViewById(R.id.listview);
         buscaProdutosServidor(false);
         list.setOnItemClickListener(this);
         editsearch = findViewById(R.id.search);
+
 
         if (listProdutos != null) {
             editsearch.setOnQueryTextListener(this);
