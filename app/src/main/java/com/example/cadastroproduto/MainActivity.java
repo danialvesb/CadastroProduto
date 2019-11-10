@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.Menu;
@@ -15,14 +16,9 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
@@ -31,9 +27,12 @@ import com.example.cadastroproduto.utils.ConfigSharedPreferences;
 import com.example.cadastroproduto.utils.IAlertUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+//import android.support.v7.app.AppCompatActivity;
 
 
 
@@ -53,24 +52,26 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         StrictMode.setThreadPolicy(policy);
         //É criada uma thread para executar as requisições
 
-        Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         //comentei isso pq estava fazendo o app parar de  funcionar
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
         getSupportActionBar().setTitle(getString(R.string.app_full_name));
 
-        /*
+
+        //Outro erro que estava ocorrendo, eu comentei essa linha para não ter scan, mas comentei o fab também, e ele ficou null,
         fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
-                startActivityForResult(intent, 14);
-                // Snackbar.make(view, "Leitor de código barras nã o disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-        */
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
+//                startActivityForResult(intent, 14);
+//                // Snackbar.make(view, "Leitor de código barras nã o disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//            }
+//        });
+
+
         list = findViewById(R.id.listview);
         buscaProdutosServidor(false);
         list.setOnItemClickListener(this);
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         Boolean bFocoCpoPesquisa = ConfigSharedPreferences.getBoolean(this, "cfgFocoCpoPesquisa");
 
+        //Definindo o comportamento do layout
         if (bFocoCpoPesquisa)
             ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
         else {
