@@ -52,6 +52,9 @@
 
         <activity android:name=".SplashActivity">
         </activity>
+
+        <activity android:name=".AtualizaProdutosActivity">
+        </activity>
     </application>
 
 </manifest>
