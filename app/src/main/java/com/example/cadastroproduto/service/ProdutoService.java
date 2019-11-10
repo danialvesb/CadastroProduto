@@ -18,6 +18,8 @@ import com.example.cadastroproduto.utils.DateUtil;
 import com.example.cadastroproduto.utils.HttpHelper;
 import com.example.cadastroproduto.utils.NetworkType;
 
+import static com.example.cadastroproduto.utils.ConfigSharedPreferences.*;
+
 public class ProdutoService {
 
     public static List<Produto> getProdutos(boolean isForcarAtualizacao) throws IOException {
@@ -25,9 +27,11 @@ public class ProdutoService {
         boolean bGet = false;
         String json = "";
         String mensagem2 = "";
-        String networkType = NetworkType.getNetworkClass(MyApp.getContext());
+        String networkType = "WIFI";
+//        String networkType = NetworkType.getNetworkClass(MyApp.getContext()); está ocorrendo problema resolver depois
 
-        String sServidorIP = ConfigSharedPreferences.getString(MyApp.getContext(), "cfgServidorIP");
+
+        String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");//é possível chamar getString pq é static
         // Log.w("DDM - Log Sandro", "sServidorIP = " + sServidorIP);
 
         if (networkType.equals("-") || !networkType.equals("WIFI")) {
@@ -39,6 +43,11 @@ public class ProdutoService {
             Toast.makeText(MyApp.getContext(), mensagem + "\n" + mensagem2, Toast.LENGTH_LONG).show();
             isForcarAtualizacao = false;
         }
+        //A lógica acima é simples, primeiro verifica se tem conexão com a internet, e retorna a mesagem sem conexão com a internet.
+        //Depois verifica se o servidor ip foi configurado, se não tiver é retornado a mensagem de produtos carregados do próprio celular.
+        //por fim como não tem conexão com o servidor forçar atualização fica false.
+
+
 
         if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
@@ -62,8 +71,8 @@ public class ProdutoService {
             }
             else {
                 if (bGet) {
-                    ConfigSharedPreferences.setString(MyApp.getContext(), "cfgJsonProdutos", json);
-                    ConfigSharedPreferences.setString(MyApp.getContext(), "cfgDtUltAtz", DateUtil.DataDMY());
+                    setString(MyApp.getContext(), "cfgJsonProdutos", json);
+                    setString(MyApp.getContext(), "cfgDtUltAtz", DateUtil.DataDMY());
                 }
             }
         }
@@ -72,7 +81,7 @@ public class ProdutoService {
     }
 
     private static String getJsonConfiguracao() {
-        String json = ConfigSharedPreferences.getString(MyApp.getContext(), "cfgJsonProdutos");
+        String json = getString(MyApp.getContext(), "cfgJsonProdutos");
         return json;
     }
 

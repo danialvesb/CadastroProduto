@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 public class MyApp extends Application {
-    private static MyApp instance;
+    private static MyApp instance; //estava retornando null pq não foi definida no android manifest
+
 
     public static Context getContext(){
         return instance;
@@ -15,6 +16,7 @@ public class MyApp extends Application {
     public void onCreate() {
         instance = this;
         super.onCreate();
+//        instance.getApplicationContext();
     }
 
     public static String versionName(Context context) {

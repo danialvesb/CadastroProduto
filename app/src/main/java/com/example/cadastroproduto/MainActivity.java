@@ -12,12 +12,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 
+
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 
@@ -51,7 +54,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //É criada uma thread para executar as requisições
 
         Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        //comentei isso pq estava fazendo o app parar de  funcionar
+        //setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
         getSupportActionBar().setTitle(getString(R.string.app_full_name));
 
@@ -79,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         Boolean bFocoCpoPesquisa = ConfigSharedPreferences.getBoolean(this, "cfgFocoCpoPesquisa");
 
-        if (bFocoCpoPesquisa) {
+        if (bFocoCpoPesquisa)
             ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
-        } else {
+        else {
             list.requestFocus();
         }
 
@@ -91,17 +96,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             inputTypeEditSearch = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
         }
 
-        editsearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener(){
-            public void onFocusChange(View view, boolean has_focus) {
-                if (has_focus) {
-                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
-                } else {
-                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.BOTTOM | Gravity.END;
-                }
-            }
-        });
+//        editsearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener(){
+//            public void onFocusChange(View view, boolean has_focus) {
+//                if (has_focus) {
+//                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
+//                } else {
+//                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.BOTTOM | Gravity.END;
+//                }
+//            }
+//        });
     }  // onCreate
 
+    //Forçar atualização fica null pq é o usuário que vai atualizar eu acho
     private void buscaProdutosServidor(boolean bForcarAtualizacao) {
         listProdutos = null;
 
