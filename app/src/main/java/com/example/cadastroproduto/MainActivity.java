@@ -1,10 +1,5 @@
 package com.example.cadastroproduto;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         StrictMode.setThreadPolicy(policy);
         //É criada uma thread para executar as requisições
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
         getSupportActionBar().setTitle(getString(R.string.app_full_name));
