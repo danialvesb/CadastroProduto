@@ -40,5 +40,5 @@
     <string name="descricaoproduto">Descrição:</string>
     <string name="salvarproduto">Salvar</string>
     <string name="precoproduto">Valor:</string>
-
+    <string name="cadastro_produtos">Cadastrar Produtos</string>
 </resources>

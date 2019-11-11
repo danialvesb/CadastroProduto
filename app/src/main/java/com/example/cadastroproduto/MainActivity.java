@@ -62,14 +62,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         //Outro erro que estava ocorrendo, eu comentei essa linha para não ter scan, mas comentei o fab também, e ele ficou null,
         fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
 //                startActivityForResult(intent, 14);
-//                // Snackbar.make(view, "Leitor de código barras nã o disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//            }
-//        });
+                Intent intent = new Intent(MyApp.getContext(), CadastroProdutosActivity.class);
+                startActivity(intent);
+
+                // Snackbar.make(view, "Leitor de código barras nã o disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
 
 
         list = findViewById(R.id.listview);
@@ -98,15 +101,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             inputTypeEditSearch = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
         }
 
-//        editsearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener(){
-//            public void onFocusChange(View view, boolean has_focus) {
-//                if (has_focus) {
-//                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
-//                } else {
-//                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.BOTTOM | Gravity.END;
-//                }
-//            }
-//        });
+        editsearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener(){
+            public void onFocusChange(View view, boolean has_focus) {
+                if (has_focus) {
+                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
+                } else {
+                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.BOTTOM | Gravity.END;
+                }
+            }
+        });
     }  // onCreate
 
     //Forçar atualização fica null pq é o usuário que vai atualizar eu acho
