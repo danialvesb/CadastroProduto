@@ -1,5 +1,6 @@
 package com.example.cadastroproduto.service;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -103,22 +104,23 @@ public class ProdutoService {
         List<Produto> produtos = new ArrayList<>();
         ///JSONObject converte string em json
         try {
-            JSONObject root = new JSONObject(json);
-            JSONObject obj = root.getJSONObject("produtos");
-            JSONArray jsonProdutos = obj.getJSONArray("produto");
+            JSONArray produtosA = new JSONArray(json);
 
-            for (int i = 0; i < jsonProdutos.length(); i++) {
-                JSONObject jsonProduto = jsonProdutos.getJSONObject(i);
+
+
+            for (int i = 0; i < produtosA.length(); i++) {
+                JSONObject jsonObj = produtosA.getJSONObject(i);
                 Produto p = new Produto();
 
 //                p.setEan(jsonProduto.optString("ean"));
 
-                p.setDescricao(jsonProduto.optString("descricao"));
-                p.setPreco(jsonProduto.optDouble("pcovenda"));
+                p.setNome(jsonObj.optString("nome"));
+                p.setPreco(jsonObj.optDouble("valor"));
 
                 produtos.add(p);
             }
         } catch (JSONException e) {
+            Log.i("Daniel", e.getMessage());
             produtos.clear();
         }
 
