@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         //Definindo o comportamento do layout
         if (bFocoCpoPesquisa)
-            ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
+            ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
         else {
             list.requestFocus();
         }
@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         editsearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean has_focus) {
                 if (has_focus) {
-                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.END;
+                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
                 } else {
-                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.BOTTOM | Gravity.END;
+                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
                 }
             }
         });
