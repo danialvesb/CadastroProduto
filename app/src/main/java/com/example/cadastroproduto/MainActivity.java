@@ -153,10 +153,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (newText.isEmpty()) {
             editsearch.setInputType(inputTypeEditSearch);
         } else {
-            if (newText.substring(0, 1).matches("[0-9]"))
-                editsearch.setInputType(InputType.TYPE_CLASS_NUMBER);
-            else
-                editsearch.setInputType(inputTypeEditSearch);
+            if (newText.substring(0, 1).matches("[0-9]")) {
+//                editsearch.setInputType(InputType.TYPE_CLASS_NUMBER);
+            } else {
+//                editsearch.setInputType(inputTypeEditSearch);
+            }
         }
 
         return true;
