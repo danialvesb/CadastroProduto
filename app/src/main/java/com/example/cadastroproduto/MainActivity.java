@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         StrictMode.setThreadPolicy(policy);
         //É criada uma thread para executar as requisições
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
 
         //comentei isso pq estava fazendo o app parar de  funcionar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
+//        getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
         getSupportActionBar().setTitle(getString(R.string.app_full_name));
 
 
