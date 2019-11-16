@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:clickable="true"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:backgroundTint="#4CAF50"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
