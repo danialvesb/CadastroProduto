@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             Toast.makeText(this, listProdutos.size() + " produtos cadastrados.", Toast.LENGTH_LONG).show();
         }
 
+
+            //Essa arqui está definindo se
         Boolean bFocoCpoPesquisa = ConfigSharedPreferences.getBoolean(this, "cfgFocoCpoPesquisa");
 
         //Definindo o comportamento do layout
