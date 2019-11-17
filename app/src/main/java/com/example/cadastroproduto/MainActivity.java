@@ -26,7 +26,6 @@ import com.example.cadastroproduto.utils.AlertUtil;
 import com.example.cadastroproduto.utils.ConfigSharedPreferences;
 import com.example.cadastroproduto.utils.IAlertUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.internal.CircularBorderDrawable;
 
 
 import java.io.IOException;
@@ -56,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Toolbar toolbar =  findViewById(R.id.toolbar);
         Toolbar barraInferiorEsquerda = findViewById(R.id.barraInferiorEsquerda);
         Toolbar barraInferiorDireita = findViewById(R.id.barraInferiorDireita);
-
-//        ((CoordinatorLayout.LayoutParams) barraInferiorEsquerda.getLayoutParams()).gravity = CircularBorderDrawable.resolveOpacity(13,3);
 
         //comentei isso pq estava fazendo o app parar de  funcionar
         setSupportActionBar(toolbar);
@@ -108,15 +105,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             inputTypeEditSearch = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
         }
 
-        editsearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener(){
-            public void onFocusChange(View view, boolean has_focus) {
-                if (has_focus) {
-                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
-                } else {
-                    ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
-                }
-            }
-        });
+
     }  // onCreate
 
     //Forçar atualização fica null pq é o usuário que vai atualizar eu acho

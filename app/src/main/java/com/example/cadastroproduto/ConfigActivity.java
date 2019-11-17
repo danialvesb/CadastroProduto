@@ -31,6 +31,7 @@ public class ConfigActivity extends AppCompatActivity {
         }
 
         getSupportActionBar().setTitle(getString(R.string.menu_configuracao));
+
         //Esse método define a barra de ferramentas como a barra de apps para a atividade.
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
