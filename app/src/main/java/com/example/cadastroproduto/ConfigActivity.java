@@ -2,8 +2,11 @@ package com.example.cadastroproduto;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -24,7 +27,8 @@ public class ConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarConfig);
+
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -32,8 +36,9 @@ public class ConfigActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(getString(R.string.menu_configuracao));
 
-        //Esse método define a barra de ferramentas como a barra de apps para a atividade.
 
+
+        //Voltar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String sServidorIP = ConfigSharedPreferences.getString(this, "cfgServidorIP");

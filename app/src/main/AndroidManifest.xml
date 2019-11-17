@@ -28,7 +28,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ConfigActivity" />
+        <activity android:name=".ConfigActivity"
+            android:theme="@style/AppTheme.NoActionBar" />/>
         <activity android:name=".DetalheProdutoActivity" />
         <activity android:name=".SobreActivity" />
         <activity

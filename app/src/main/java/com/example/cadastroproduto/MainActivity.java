@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             inputTypeEditSearch = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
         }
 
-
     }  // onCreate
 
     //Forçar atualização fica null pq é o usuário que vai atualizar eu acho
