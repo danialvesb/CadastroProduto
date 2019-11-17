@@ -2,6 +2,7 @@ package com.example.cadastroproduto;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     List<Produto> listProdutos = new ArrayList<>();
     FloatingActionButton fab;
     Integer inputTypeEditSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
