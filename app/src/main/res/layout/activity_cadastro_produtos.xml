@@ -2,19 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/idNameI"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CadastroProdutosActivity">
 
-    <TextView
-        android:id="@+id/telaCadastroProdutoId"
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/borda_caixa_texto_escura"
+        app:layout_constraintBottom_toBottomOf="@+id/inputValorId"
+        app:layout_constraintEnd_toEndOf="@+id/inputNomeProdutoId"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/inputNomeProdutoId"
+        app:layout_constraintTop_toTopOf="@+id/inputDtTimeId" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="100dp"
-        android:text="@string/cadastroproduto"
+        android:layout_gravity="bottom|center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        app:backgroundTint="#4CAF50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarCadastro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/corBarras"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,126 +46,65 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="158dp"
         android:ems="10"
         android:inputType="datetime"
+        android:textColor="#00000000"
+        android:textColorHighlight="#00000000"
+        android:textColorLink="#00000000"
+        android:textCursorDrawable="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDtTimeId" />
-
-    <TextView
-        android:id="@+id/tvDtTimeId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/dttimei"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/telaCadastroProdutoId" />
-
-    <TextView
-        android:id="@+id/tvNomeDoProdutoId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/inomeproduto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idButtonEan" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCadastro" />
 
     <EditText
         android:id="@+id/inputNomeProdutoId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/tvValorId"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvNomeDoProdutoId" />
-
-    <Button
-        android:id="@+id/idButtonEan"
-        android:layout_width="39dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="24dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/tvNomeDoProdutoId"
+        android:textColor="#00000000"
+        android:textColorHighlight="#00000000"
+        android:textColorHint="#00000000"
+        android:textColorLink="#00000000"
+        android:textCursorDrawable="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputDtTimeId" />
-
-    <EditText
-        android:id="@+id/inputDescricaoProId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescricaoProdutoId" />
-
-    <TextView
-        android:id="@+id/tvDescricaoProdutoId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/descricaoproduto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvValorId" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="87dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="128dp"
-        android:text="@string/salvarproduto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputDescricaoProId" />
-
-    <TextView
-        android:id="@+id/tvValorId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
-        android:text="@string/precoproduto"
-        app:layout_constraintBottom_toTopOf="@+id/tvDescricaoProdutoId"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputNomeProdutoId" />
 
     <EditText
         android:id="@+id/inputValorId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/tvValorId"
+        android:textColorHint="#00000000"
+        android:textCursorDrawable="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputNomeProdutoId" />
 
-    <Button
-        android:id="@+id/btnImgProdutoId"
+    <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="207dp"
-        android:layout_marginBottom="24dp"
-        android:text="img"
-        app:layout_constraintBottom_toTopOf="@+id/tvNomeDoProdutoId"
+        android:text="@string/descricaoproduto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputValorId" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textInputEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/borda_caixa_texto"
+        app:layout_constraintBottom_toTopOf="@+id/fab2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/idButtonEan"
-        app:layout_constraintTop_toBottomOf="@+id/inputDtTimeId" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

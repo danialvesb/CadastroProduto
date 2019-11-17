@@ -1,10 +1,14 @@
 package com.example.cadastroproduto;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+
+
 
 import com.example.cadastroproduto.model.Produto;
 
@@ -18,6 +22,16 @@ public class CadastroProdutosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_produtos);
 
+        Toolbar toolbar = findViewById(R.id.toolbarCadastro);
+
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+        getSupportActionBar().setTitle(getString(R.string.cadastroproduto));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
 
@@ -26,11 +40,11 @@ public class CadastroProdutosActivity extends AppCompatActivity {
             View vNome = findViewById(R.id.inputNomeProdutoId);
             View vDtEntrada = findViewById(R.id.inputDtTimeId);
             View vPreco = findViewById(R.id.inputValorId);
-            View vDescricao = findViewById(R.id.inputDescricaoProId);
+//            View vDescricao = findViewById(R.id.inputDescricaoProId);
 
             Produto produto = new Produto();
             produto.setNome(vNome.toString());
-            produto.setDescricao(vDescricao.toString());
+        //    produto.setDescricao(vDescricao.toString());
             produto.setPreco(Double.parseDouble(vPreco.toString()));
 
 
