@@ -14,7 +14,7 @@
     <string name="senhaincorreta">Senha incorreta!</string>
     <string name="dtentrada">Data e hora de entrada:</string>
     <string name="dtsaida">Data e hora de saída:</string>
-    <string name="cadastroproduto">Modulo cadastro de Produto</string>
+    <string name="cadastroproduto">Cadastro de Produto</string>
     <string name="movimentacaoproduto">Movimentações do produto</string>
     <string name="tproduto">Nome</string>
     <string name="valorproduto">Preço:</string>
