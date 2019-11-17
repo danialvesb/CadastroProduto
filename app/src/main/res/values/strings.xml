@@ -41,4 +41,10 @@
     <string name="salvarproduto">Salvar</string>
     <string name="precoproduto">Valor:</string>
     <string name="cadastro_produtos">Cadastrar Produtos</string>
+    <string name="senha">Senha</string>
+    <string name="senha_ads">Senha de administrador</string>
+    <string name="id_senha_acesso">Exigir senha para acesso às configurações</string>
+    <string name="posicionar_foco_teclado">Posicionar no campo de pesquisa ao iniciar</string>
+    <string name="id_servidor">IP do Servidor</string>
+    <string name="ip_servidor">IP do Servidor Local</string>
 </resources>

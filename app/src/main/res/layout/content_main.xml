@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/corBarras"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="@id/search"
@@ -25,12 +25,12 @@
         android:iconifiedByDefault="false"
         android:inputType="textCapCharacters"
         android:queryHint="@string/content_main_pesquisar_produto"
+        app:layout_constraintBottom_toTopOf="@+id/listview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <requestFocus
-            android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </SearchView>
@@ -48,11 +48,11 @@
     </ListView>
 
     <androidx.appcompat.widget.Toolbar
-    android:id="@+id/barraInferiorEsquerda"
-        android:background="@drawable/borda"
+        android:id="@+id/barraInferiorEsquerda"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/borda"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
