@@ -12,9 +12,6 @@ import android.widget.Toast;
 
 import com.example.cadastroproduto.model.Produto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CadastroProdutosActivity extends AppCompatActivity {
 
     @Override
@@ -37,9 +34,9 @@ public class CadastroProdutosActivity extends AppCompatActivity {
 
     public void clickSalvar(View view) {
         try {
-            View vNome = findViewById(R.id.inputNomeProdutoId);
-            View vDtEntrada = findViewById(R.id.inputDtTimeId);
-            View vPreco = findViewById(R.id.inputValorId);
+            View vNome = findViewById(R.id.inputNome);
+            View vDtEntrada = findViewById(R.id.inputDtHora);
+            View vPreco = findViewById(R.id.inputValor);
 //            View vDescricao = findViewById(R.id.inputDescricaoProId);
 
             Produto produto = new Produto();
