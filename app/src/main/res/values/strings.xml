@@ -47,4 +47,5 @@
     <string name="posicionar_foco_teclado">Posicionar no campo de pesquisa ao iniciar</string>
     <string name="id_servidor">IP do Servidor</string>
     <string name="ip_servidor">IP do Servidor Local</string>
+    <string name="dt_hora_entrada">Data e hora de entrada</string>
 </resources>
