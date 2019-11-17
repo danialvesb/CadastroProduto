@@ -26,6 +26,7 @@ import com.example.cadastroproduto.utils.AlertUtil;
 import com.example.cadastroproduto.utils.ConfigSharedPreferences;
 import com.example.cadastroproduto.utils.IAlertUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.internal.CircularBorderDrawable;
 
 
 import java.io.IOException;
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //É criada uma thread para executar as requisições
 
         Toolbar toolbar =  findViewById(R.id.toolbar);
+        Toolbar barraInferiorEsquerda = findViewById(R.id.barraInferiorEsquerda);
+        Toolbar barraInferiorDireita = findViewById(R.id.barraInferiorDireita);
+
+//        ((CoordinatorLayout.LayoutParams) barraInferiorEsquerda.getLayoutParams()).gravity = CircularBorderDrawable.resolveOpacity(13,3);
 
         //comentei isso pq estava fazendo o app parar de  funcionar
         setSupportActionBar(toolbar);
