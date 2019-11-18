@@ -17,6 +17,7 @@ import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.utils.ConfigSharedPreferences;
 import com.example.cadastroproduto.utils.DateUtil;
 import com.example.cadastroproduto.utils.HttpHelper;
+import com.example.cadastroproduto.utils.IOUtils;
 import com.example.cadastroproduto.utils.NetworkType;
 
 import static com.example.cadastroproduto.utils.ConfigSharedPreferences.*;
@@ -81,6 +82,31 @@ public class ProdutoService {
         return produtos;
     }
 
+    public static Produto setProdutos(Produto produto) throws IOException {
+        String json = "";
+        byte [] params = IOUtils.objectToByte(produto);
+
+        String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+
+        if (sServidorIP != null && !sServidorIP.isEmpty()) {
+            HttpHelper helper = new HttpHelper();
+            json = helper.doPost("http://" + sServidorIP + ":8080/produtos",params ,"utf-8");
+
+        } else {
+            json = getJsonConfiguracao();
+        }
+
+        if (json == null || json.isEmpty()) {
+            if (sServidorIP == null || sServidorIP.isEmpty()) {
+                throw new IOException("IP do servidor não configurado!\nNenhum produto cadastrado no celular.");
+            } else {
+                throw new IOException("Nenhum produto cadastrado no celular.");
+            }
+        }
+
+        return produto;
+    }
+
     private static String getJsonConfiguracao() {
         String json = getString(MyApp.getContext(), "cfgJsonProdutos");
         return json;
@@ -105,8 +131,6 @@ public class ProdutoService {
         ///JSONObject converte string em json
         try {
             JSONArray produtosA = new JSONArray(json);
-
-
 
             for (int i = 0; i < produtosA.length(); i++) {
                 JSONObject jsonObj = produtosA.getJSONObject(i);

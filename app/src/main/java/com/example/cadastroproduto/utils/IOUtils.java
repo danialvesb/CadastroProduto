@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
@@ -187,5 +189,32 @@ public class IOUtils {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             throw new RuntimeException("Qualquer operação de I/O não pode ser executado na UI Thread.");
         }
+    }
+
+
+    public static byte []objectToByte(Object objeto)
+    {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = null;
+
+        byte[] yourBytes;
+        try {
+            out = new ObjectOutputStream(bos);
+            out.writeObject(objeto);
+            out.flush();
+            yourBytes = bos.toByteArray();
+            return yourBytes;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bos.close();
+            } catch (IOException ex) {
+                // ignore close exception
+            }
+        }
+        return yourBytes = new byte[1];
+
     }
 }
