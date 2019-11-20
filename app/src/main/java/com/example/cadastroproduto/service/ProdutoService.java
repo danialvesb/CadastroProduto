@@ -9,7 +9,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.cadastroproduto.MyApp;
 import com.example.cadastroproduto.R;
@@ -30,6 +32,7 @@ public class ProdutoService {
         String json = "";
         String mensagem2 = "";
         String networkType = "WIFI";
+
 //        String networkType = NetworkType.getNetworkClass(MyApp.getContext()); está ocorrendo problema resolver depois
 
 
@@ -51,7 +54,7 @@ public class ProdutoService {
 
 
 
-        if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
+        if (isForcarAtualizacao || sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
             json = helper.doGet("http://" + sServidorIP + ":8080/produtos");
             bGet = true;
@@ -82,29 +85,23 @@ public class ProdutoService {
         return produtos;
     }
 
-    public static Produto setProdutos(Produto produto) throws IOException {
-        String json = "";
-        byte [] params = IOUtils.objectToByte(produto);
-
+    public static  void setProdutos(Produto produto) throws IOException, JSONException {
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+        HttpHelper helper = new HttpHelper();
+        helper.setContentType("application/json");
 
-        if (sServidorIP != null && !sServidorIP.isEmpty()) {
-            HttpHelper helper = new HttpHelper();
-            json = helper.doPost("http://" + sServidorIP + ":8080/produtos",params ,"utf-8");
+//        Map<String, String> mapProdutos = new HashMap<String, String>();
+//        mapProdutos.put("nome", produto.getNome());
+//        mapProdutos.put("descricao", produto.getDescricao());
+        JSONObject json = new JSONObject();
+        json.put("nome", produto.getNome());
+        json.put("descricao", produto.getDescricao());
 
-        } else {
-            json = getJsonConfiguracao();
-        }
+        String.pa
 
-        if (json == null || json.isEmpty()) {
-            if (sServidorIP == null || sServidorIP.isEmpty()) {
-                throw new IOException("IP do servidor não configurado!\nNenhum produto cadastrado no celular.");
-            } else {
-                throw new IOException("Nenhum produto cadastrado no celular.");
-            }
-        }
 
-        return produto;
+        helper.doPost("http://" + sServidorIP + ":8080/produtos", mapProdutos, "ISO-8859-1");
+
     }
 
     private static String getJsonConfiguracao() {

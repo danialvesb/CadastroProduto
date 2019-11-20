@@ -3,6 +3,9 @@ package com.example.cadastroproduto.model;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Produto implements Serializable {
     private long id;
@@ -80,9 +83,6 @@ public class Produto implements Serializable {
         this.codBarra = codBarra;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return super.toString();
-    }
+
+
 }

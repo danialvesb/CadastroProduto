@@ -190,31 +190,4 @@ public class IOUtils {
             throw new RuntimeException("Qualquer operação de I/O não pode ser executado na UI Thread.");
         }
     }
-
-
-    public static byte []objectToByte(Object objeto)
-    {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput out = null;
-
-        byte[] yourBytes;
-        try {
-            out = new ObjectOutputStream(bos);
-            out.writeObject(objeto);
-            out.flush();
-            yourBytes = bos.toByteArray();
-            return yourBytes;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                bos.close();
-            } catch (IOException ex) {
-                // ignore close exception
-            }
-        }
-        return yourBytes = new byte[1];
-
-    }
 }

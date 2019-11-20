@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,17 +43,13 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     private static final int REQUEST_CAMERA = 1;
     private List<ImageView> listImages;
     private ImageView imageView;
+    public Produto produto = new Produto();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_produtos);
-
-        ImageButton btAdicionar = findViewById(R.id.fab2);
-        final EditText nome = findViewById(R.id.inputNome);
-        final EditText descricao = findViewById(R.id.inputDescricao);
-        final EditText dtHora = findViewById(R.id.inputDtHora);
 
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
 
@@ -72,25 +69,27 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
         }
 
-        //        SALVAR
-        btAdicionar.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Produto produto = new Produto();
-                produto.setDtEntrada(dtHora.getText().toString());
-                produto.setNome(nome.getText().toString());
-                produto.setDescricao(descricao.getText().toString());
-
-                try {
-                    ProdutoService.setProdutos(produto);
-                } catch (IOException e) {
-                    Log.e("daniel", e.getMessage(), e);
-                }
-            }
-        });
     }
+
+    public void onclickSalvar(View view) {
+
+        try {
+            EditText nome = findViewById(R.id.inputNome);
+            TextInputEditText descricao = findViewById(R.id.inputDescricao);
+            produto.setNome(nome.getText().toString());
+            produto.setDescricao(descricao.getText().toString());
+            ProdutoService.setProdutos(produto);
+
+
+        }catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+    }
+
 
     public void onClickImage(View view) {
         tirarFoto();

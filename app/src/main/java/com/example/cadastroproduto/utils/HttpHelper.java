@@ -127,18 +127,18 @@ public class HttpHelper {
         return s;
     }
 
-    public String doPost(String url, Map<String, String> params, String charset) throws IOException {
-        String queryString = getQueryString(params);
-        byte[] bytes = params != null ? queryString.getBytes(charset) : null;
+//    public String doPost(String url, Map<String, String> params, String charset) throws IOException {
+//        String queryString = getQueryString(params);
+//        byte[] bytes = params != null ? queryString.getBytes(charset) : null;
+//
+//        if (LOG_ON) {
+//            Log.d(TAG, "Http.doPost: " + url + "?" + params);
+//        }
+//
+//        return doPost(url, bytes, charset);
+//    }
 
-        if (LOG_ON) {
-            Log.d(TAG, "Http.doPost: " + url + "?" + params);
-        }
-
-        return doPost(url, bytes, charset);
-    }
-
-    public String doPost(String url, byte[] params, String charset) throws IOException {
+    public String doPost(String url, String json, String charset) throws IOException {
         if (LOG_ON) {
             Log.d(TAG, ">> Http.doPost: " + url);
         }
@@ -161,12 +161,14 @@ public class HttpHelper {
             conn.setDoInput(true);
             conn.connect();
 
-            if (params != null) {
-                OutputStream out = conn.getOutputStream();
-                out.write(params);
-                out.flush();
-                out.close();
-            }
+//            if (params != null) {
+//
+//
+//            }
+            OutputStream out = conn.getOutputStream();
+            out.write(json.getBytes());
+            out.flush();
+            out.close();
 
             InputStream in = null;
             int status = conn.getResponseCode();
