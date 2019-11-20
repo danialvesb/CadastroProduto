@@ -18,18 +18,24 @@ import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 
-
-
 import com.example.cadastroproduto.model.Produto;
+import com.example.cadastroproduto.service.ProdutoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.IOException;
 import java.util.List;
+
+
 
 import static android.Manifest.permission_group.CAMERA;
 
@@ -37,6 +43,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     private static final int REQUEST_CAMERA = 1;
     private List<ImageView> listImages;
     private ImageView imageView;
+    public Produto produto = new Produto();
 
 
     @Override
@@ -46,11 +53,11 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
 
-        FloatingActionButton fabImage= findViewById(R.id.fabImage);
+        FloatingActionButton fabImage = findViewById(R.id.fabImage);
 //        imageView = findViewById(R.id.imageView);
 
 
-        if(toolbar != null) {
+        if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 
@@ -58,13 +65,31 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 0);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
+        }
+
+    }
+
+    public void onclickSalvar(View view) {
+
+        try {
+            EditText nome = findViewById(R.id.inputNome);
+            TextInputEditText descricao = findViewById(R.id.inputDescricao);
+            produto.setNome(nome.getText().toString());
+            produto.setDescricao(descricao.getText().toString());
+            ProdutoService.setProdutos(produto);
+
+
+        }catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
 
 
+
     }
+
 
     public void onClickImage(View view) {
         tirarFoto();

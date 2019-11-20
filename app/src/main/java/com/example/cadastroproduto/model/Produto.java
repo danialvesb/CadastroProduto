@@ -1,8 +1,14 @@
 package com.example.cadastroproduto.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Produto implements Serializable {
+    private long id;
     private String nome;
     private String dtEntrada;
     private String dtSaida = null;
@@ -12,6 +18,14 @@ public class Produto implements Serializable {
     private String codBarra = null;
 
     public Produto() {}
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public String getNome() {
         return nome;
@@ -68,4 +82,7 @@ public class Produto implements Serializable {
     public void setCodBarra(String codBarra) {
         this.codBarra = codBarra;
     }
+
+
+
 }

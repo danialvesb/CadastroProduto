@@ -9,7 +9,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.cadastroproduto.MyApp;
 import com.example.cadastroproduto.R;
@@ -17,6 +19,7 @@ import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.utils.ConfigSharedPreferences;
 import com.example.cadastroproduto.utils.DateUtil;
 import com.example.cadastroproduto.utils.HttpHelper;
+import com.example.cadastroproduto.utils.IOUtils;
 import com.example.cadastroproduto.utils.NetworkType;
 
 import static com.example.cadastroproduto.utils.ConfigSharedPreferences.*;
@@ -29,6 +32,7 @@ public class ProdutoService {
         String json = "";
         String mensagem2 = "";
         String networkType = "WIFI";
+
 //        String networkType = NetworkType.getNetworkClass(MyApp.getContext()); está ocorrendo problema resolver depois
 
 
@@ -50,7 +54,7 @@ public class ProdutoService {
 
 
 
-        if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
+        if (isForcarAtualizacao || sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
             json = helper.doGet("http://" + sServidorIP + ":8080/produtos");
             bGet = true;
@@ -81,6 +85,25 @@ public class ProdutoService {
         return produtos;
     }
 
+    public static  void setProdutos(Produto produto) throws IOException, JSONException {
+        String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+        HttpHelper helper = new HttpHelper();
+        helper.setContentType("application/json");
+        helper.setCharsetToEncode("UTF-8");
+
+//        Map<String, String> mapProdutos = new HashMap<String, String>();
+//        mapProdutos.put("nome", produto.getNome());
+//        mapProdutos.put("descricao", produto.getDescricao());
+        JSONObject produtoJson = new JSONObject();
+        produtoJson.put("nome", produto.getNome());
+        produtoJson.put("descricao", produto.getDescricao());
+
+
+
+        helper.doPost("http://" + sServidorIP + ":8080/produtos", produtoJson, "UTF-8");
+
+    }
+
     private static String getJsonConfiguracao() {
         String json = getString(MyApp.getContext(), "cfgJsonProdutos");
         return json;
@@ -105,8 +128,6 @@ public class ProdutoService {
         ///JSONObject converte string em json
         try {
             JSONArray produtosA = new JSONArray(json);
-
-
 
             for (int i = 0; i < produtosA.length(); i++) {
                 JSONObject jsonObj = produtosA.getJSONObject(i);
