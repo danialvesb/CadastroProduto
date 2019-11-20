@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -127,18 +130,7 @@ public class HttpHelper {
         return s;
     }
 
-//    public String doPost(String url, Map<String, String> params, String charset) throws IOException {
-//        String queryString = getQueryString(params);
-//        byte[] bytes = params != null ? queryString.getBytes(charset) : null;
-//
-//        if (LOG_ON) {
-//            Log.d(TAG, "Http.doPost: " + url + "?" + params);
-//        }
-//
-//        return doPost(url, bytes, charset);
-//    }
-
-    public String doPost(String url, String json, String charset) throws IOException {
+    public String doPost(String url, JSONObject jsonParam, String charset) throws IOException {
         if (LOG_ON) {
             Log.d(TAG, ">> Http.doPost: " + url);
         }
@@ -151,7 +143,8 @@ public class HttpHelper {
             conn = (HttpURLConnection) u.openConnection();
 
             if (contentType != null) {
-                conn.setRequestProperty("Content-Type", contentType);
+                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                conn.setRequestProperty("Accept","application/json");
             }
 
             conn.setRequestMethod("POST");
@@ -161,14 +154,13 @@ public class HttpHelper {
             conn.setDoInput(true);
             conn.connect();
 
-//            if (params != null) {
-//
-//
-//            }
-            OutputStream out = conn.getOutputStream();
-            out.write(json.getBytes());
-            out.flush();
-            out.close();
+            if (jsonParam != null) {
+                OutputStream out = conn.getOutputStream();
+                DataOutputStream os = new DataOutputStream(out);
+                os.writeBytes(jsonParam.toString());
+                os.flush();
+                os.close();
+            }
 
             InputStream in = null;
             int status = conn.getResponseCode();

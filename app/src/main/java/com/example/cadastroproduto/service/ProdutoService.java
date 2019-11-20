@@ -89,18 +89,18 @@ public class ProdutoService {
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
         HttpHelper helper = new HttpHelper();
         helper.setContentType("application/json");
+        helper.setCharsetToEncode("UTF-8");
 
 //        Map<String, String> mapProdutos = new HashMap<String, String>();
 //        mapProdutos.put("nome", produto.getNome());
 //        mapProdutos.put("descricao", produto.getDescricao());
-        JSONObject json = new JSONObject();
-        json.put("nome", produto.getNome());
-        json.put("descricao", produto.getDescricao());
-
-        String.pa
+        JSONObject produtoJson = new JSONObject();
+        produtoJson.put("nome", produto.getNome());
+        produtoJson.put("descricao", produto.getDescricao());
 
 
-        helper.doPost("http://" + sServidorIP + ":8080/produtos", mapProdutos, "ISO-8859-1");
+
+        helper.doPost("http://" + sServidorIP + ":8080/produtos", produtoJson, "UTF-8");
 
     }
 
