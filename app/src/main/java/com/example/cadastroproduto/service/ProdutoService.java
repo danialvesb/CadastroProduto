@@ -1,5 +1,9 @@
 package com.example.cadastroproduto.service;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Base64OutputStream;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -85,22 +89,35 @@ public class ProdutoService {
         return produtos;
     }
 
-    public static  void setProdutos(Produto produto) throws IOException, JSONException {
+    public static  void setProduto(Produto produto) throws IOException, JSONException {
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
         HttpHelper helper = new HttpHelper();
         helper.setContentType("application/json");
         helper.setCharsetToEncode("UTF-8");
+        JSONObject produtoJson  = new JSONObject();
 
-//        Map<String, String> mapProdutos = new HashMap<String, String>();
-//        mapProdutos.put("nome", produto.getNome());
-//        mapProdutos.put("descricao", produto.getDescricao());
-        JSONObject produtoJson = new JSONObject();
+        if (produto.getImagens().size() > 0) {
+            List<String> imagems = new ArrayList<>();
+            List<Bitmap> bitmaps = produto.getImagens();
+            for (Bitmap bitmap : bitmaps) {
+                imagems.add(IOUtils.encodeTobase64(bitmap));
+                produtoJson.put("imagem"+produto.getImagens().size(), imagems.get(imagems.size()-1));
+            }
+
+        }
+
+
+
         produtoJson.put("nome", produto.getNome());
+        produtoJson.put("valor", produto.getPreco());
         produtoJson.put("descricao", produto.getDescricao());
-
+        produtoJson.put("dtEntrada", produto.getDtEntrada());
+        produtoJson.put("dtSaida", produto.getDtSaida());
 
 
         helper.doPost("http://" + sServidorIP + ":8080/produtos", produtoJson, "UTF-8");
+
+
 
     }
 
@@ -123,20 +140,48 @@ public class ProdutoService {
         return produtos;
     }
 
+    public static Bitmap parserBitmap(String params) {
+        Bitmap bitmap = null;
+
+        bitmap = BitmapFactory.decodeByteArray(params.getBytes(), 0, params.getBytes().length);
+        return bitmap;
+    }
+
+
     private static List<Produto> parserJSON(String json) {
         List<Produto> produtos = new ArrayList<>();
-        ///JSONObject converte string em json
+
         try {
             JSONArray produtosA = new JSONArray(json);
 
             for (int i = 0; i < produtosA.length(); i++) {
                 JSONObject jsonObj = produtosA.getJSONObject(i);
                 Produto p = new Produto();
+                String imagem1 = jsonObj.optString("imagem1");
+                String imagem2 = jsonObj.optString("imagem2");
+                String imagem3 = jsonObj.optString("imagem3");
+                String imagem4 = jsonObj.optString("imagem4");
+                String imagem5 = jsonObj.optString("imagem5");
 
-//                p.setEan(jsonProduto.optString("ean"));
 
-                p.setNome(jsonObj.optString("nome"));
+
+                Bitmap imagemBitmap1 = IOUtils.decodeBase64(imagem1);
+                Bitmap imagemBitmap2 = IOUtils.decodeBase64(imagem2);
+                Bitmap imagemBitmap3 = IOUtils.decodeBase64(imagem3);
+                Bitmap imagemBitmap4 = IOUtils.decodeBase64(imagem4);
+                Bitmap imagemBitmap5 = IOUtils.decodeBase64(imagem5);
+
+                p.setId(jsonObj.optLong("id"));
+                p.setDescricao(jsonObj.optString("descricao"));
                 p.setPreco(jsonObj.optDouble("valor"));
+                p.setNome(jsonObj.optString("nome"));
+                p.setDtEntrada(jsonObj.optString("dtEntrada"));
+                p.setDtSaida(jsonObj.optString("dtSaida"));
+                p.addImagens(imagemBitmap1);
+                p.addImagens(imagemBitmap2);
+                p.addImagens(imagemBitmap3);
+                p.addImagens(imagemBitmap4);
+                p.addImagens(imagemBitmap5);
 
                 produtos.add(p);
             }
@@ -147,4 +192,9 @@ public class ProdutoService {
 
         return produtos;
     }
+
+
+
+
+
 }

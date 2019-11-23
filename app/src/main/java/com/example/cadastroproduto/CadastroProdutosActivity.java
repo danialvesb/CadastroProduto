@@ -44,6 +44,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     private List<ImageView> listImages;
     private ImageView imageView;
     public Produto produto = new Produto();
+    public Bitmap imageBitmap;
 
 
     @Override
@@ -54,7 +55,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
 
         FloatingActionButton fabImage = findViewById(R.id.fabImage);
-//        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.imageView);
 
 
         if (toolbar != null) {
@@ -78,7 +79,9 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             TextInputEditText descricao = findViewById(R.id.inputDescricao);
             produto.setNome(nome.getText().toString());
             produto.setDescricao(descricao.getText().toString());
-            ProdutoService.setProdutos(produto);
+            produto.addImagens(imageBitmap);
+            ProdutoService.setProduto(produto);
+
 
 
         }catch (Exception e) {
@@ -106,7 +109,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             Bundle extras = data.getExtras();
             Bitmap imagemBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imagemBitmap);
-
+            this.imageBitmap = imagemBitmap;
 
 
         }
