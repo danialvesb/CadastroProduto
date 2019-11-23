@@ -6,50 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".CadastroProdutosActivity">
 
-    <TextView
-        android:id="@+id/textViewDescricao4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/valorproduto"
-        android:textSize="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputValor"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewDescricao2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/dt_hora_entrada"
-        android:textSize="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputDtHora"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewDescricao3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/inomeproduto"
-        android:textSize="8sp"
-        app:layout_constraintBottom_toTopOf="@+id/inputNome"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:onClick="onclickSalvar"
-        app:backgroundTint="#4CAF50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarCadastro"
         android:layout_width="0dp"
@@ -58,122 +14,20 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/inputDtHora"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="158dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="datetime"
-        android:textColor="#00000000"
-        android:textColorHighlight="#00000000"
-        android:textColorLink="#00000000"
-        android:textCursorDrawable="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarCadastro" />
-
-    <EditText
-        android:id="@+id/inputNome"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColor="#00000000"
-        android:textColorHighlight="#00000000"
-        android:textColorHint="#00000000"
-        android:textColorLink="#00000000"
-        android:textCursorDrawable="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputDtHora" />
-
-    <EditText
-        android:id="@+id/inputValor"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColorHint="#00000000"
-        android:textCursorDrawable="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputNome" />
-
-    <TextView
-        android:id="@+id/textViewDescricao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/descricaoproduto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputValor" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/inputDescricao"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/borda_caixa_texto"
-        app:layout_constraintBottom_toTopOf="@+id/fab2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescricao" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/borda_caixa_texto_escura"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDescricao2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarCadastro"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleMargin="0dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:onClick="onClickImage"
-        app:backgroundTint="#00FFFFFF"
-        app:fabCustomSize="80dp"
-        app:fabSize="auto"
-        app:layout_constraintBottom_toBottomOf="@+id/divider"
-        app:layout_constraintEnd_toEndOf="@+id/divider"
-        app:layout_constraintTop_toTopOf="@+id/divider"
-        app:maxImageSize="50dp"
-        app:rippleColor="#00FFFFFF"
-        app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="84dp"
-        android:layout_height="87dp"
-        app:layout_constraintBottom_toBottomOf="@+id/divider"
-        app:layout_constraintEnd_toStartOf="@+id/fabImage"
-        app:layout_constraintStart_toStartOf="@+id/divider"
-        app:layout_constraintTop_toTopOf="@+id/divider"
-        tools:srcCompat="@tools:sample/avatars[0]" />
+    <include
+        android:id="@+id/include2"
+        layout="@layout/content_cadastro_produtos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCadastro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

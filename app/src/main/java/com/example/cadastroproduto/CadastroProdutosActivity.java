@@ -42,9 +42,9 @@ import static android.Manifest.permission_group.CAMERA;
 public class CadastroProdutosActivity extends AppCompatActivity{
     private static final int REQUEST_CAMERA = 1;
     private List<ImageView> listImages;
-    private ImageView imageView;
-    public Produto produto = new Produto();
-    public Bitmap imageBitmap;
+    private Produto produto = new Produto();
+    private Bitmap imageBitmap;
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -55,7 +55,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
 
         FloatingActionButton fabImage = findViewById(R.id.fabImage);
-        imageView = findViewById(R.id.imageView);
+//        imageView = findViewById(R.id.imageView);
 
 
         if (toolbar != null) {
@@ -79,7 +79,10 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             TextInputEditText descricao = findViewById(R.id.inputDescricao);
             produto.setNome(nome.getText().toString());
             produto.setDescricao(descricao.getText().toString());
-            produto.addImagens(imageBitmap);
+
+            if(imageBitmap != null)
+                produto.addImagens(imageBitmap);
+
             ProdutoService.setProduto(produto);
 
 
@@ -108,9 +111,13 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         if(requestCode == 1 && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imagemBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imagemBitmap);
             this.imageBitmap = imagemBitmap;
 
+            ImageView imageView = null;
+            imageView.setImageBitmap(imageBitmap);
+
+            if(imagemBitmap != null)
+                recyclerView.addView(imageView);
 
         }
         super.onActivityResult(requestCode, resultCode, data);

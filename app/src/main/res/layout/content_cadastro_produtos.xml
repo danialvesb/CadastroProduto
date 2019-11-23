@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9F16242C"
+    tools:context=".CadastroProdutosActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-55dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/activity_imagens"
+                android:layout_width="match_parent"
+                android:layout_height="153dp"
+                android:layout_marginBottom="20dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:backgroundTint="#00FFFFFF"
+                android:clickable="true"
+                android:onClick="onClickImage"
+                app:backgroundTint="#00FFFFFF"
+                app:fabCustomSize="80dp"
+                app:fabSize="auto"
+                app:maxImageSize="50dp"
+                app:rippleColor="#00FFFFFF"
+                app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+
+            <TextView
+                android:id="@+id/textViewDtHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dt_hora_entrada"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/inputDtHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="datetime"
+                android:textColor="@android:color/background_dark"
+                android:textColorHighlight="#00000000"
+                android:textColorLink="#00000000"
+                android:textCursorDrawable="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textViewNomeProduto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/inomeproduto"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/inputNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="@android:color/background_dark"
+                android:textColorHighlight="#00000000"
+                android:textColorHint="#00000000"
+                android:textColorLink="#00000000"
+                android:textCursorDrawable="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textViewPreco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/valorproduto"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/inputValor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="@android:color/background_dark"
+                android:textColorHint="#00000000"
+                android:textCursorDrawable="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textViewDescricao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/descricaoproduto" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDescricao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/borda_caixa_texto"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_margin="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:onClick="onclickSalvar"
+                app:backgroundTint="#4CAF50"
+                app:srcCompat="@drawable/ic_add_black_24dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
