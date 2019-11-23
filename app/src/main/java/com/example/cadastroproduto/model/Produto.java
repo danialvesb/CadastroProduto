@@ -1,21 +1,25 @@
 package com.example.cadastroproduto.model;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class Produto implements Serializable {
     private long id;
     private String nome;
+    private Double preco;
     private String dtEntrada;
     private String dtSaida = null;
-    private Double preco;
-    private String fotoPath = null;
     private String descricao;
-    private String codBarra = null;
+    private List<Bitmap> imagens = new ArrayList<>();
+
 
     public Produto() {}
 
@@ -59,12 +63,16 @@ public class Produto implements Serializable {
         this.preco = preco;
     }
 
-    public String getFotoPath() {
-        return fotoPath;
+    public List<Bitmap> getImagens() {
+        return imagens;
     }
 
-    public void setFotoPath(String fotoPath) {
-        this.fotoPath = fotoPath;
+    public void setImagens(List<Bitmap> imagens) {
+        this.imagens = imagens;
+    }
+
+    public void addImagens(Bitmap imagens) {
+        this.imagens.add(imagens);
     }
 
     public String getDescricao() {
@@ -74,15 +82,5 @@ public class Produto implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-    public String getCodBarra() {
-        return codBarra;
-    }
-
-    public void setCodBarra(String codBarra) {
-        this.codBarra = codBarra;
-    }
-
-
 
 }

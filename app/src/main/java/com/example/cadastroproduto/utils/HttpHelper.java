@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class HttpHelper {
     private final String TAG = "Http";
-    public final int TIMEOUT_MILLIS = 15000;
+    public final int TIMEOUT_MILLIS = 30000;
     public boolean LOG_ON = false;
     private String contentType;
     private String charsetToEncode;
@@ -143,7 +143,7 @@ public class HttpHelper {
             conn = (HttpURLConnection) u.openConnection();
 
             if (contentType != null) {
-                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestProperty("Accept","application/json");
             }
 
@@ -188,7 +188,6 @@ public class HttpHelper {
         }
         return s;
     }
-
     public Bitmap doGetBitmap(String url) throws IOException {
         if (LOG_ON) {
             Log.d(TAG, ">> Http.doGet: " + url);
