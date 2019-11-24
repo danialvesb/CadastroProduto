@@ -35,6 +35,8 @@ import com.example.cadastroproduto.adapters.AdapterProduto;
 import com.example.cadastroproduto.adapters.ViewHolderFoto;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -65,6 +67,18 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 //        imageView = findViewById(R.id.imageView);
         recyclerView = findViewById(R.id.recyclerViewImagens);
 
+        //Mascáras
+        EditText data = findViewById(R.id.inputDtHora);
+        EditText preco = findViewById(R.id.inputValor);
+
+        SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN");
+        MaskTextWatcher mtw = new MaskTextWatcher(data, smf);
+        data.addTextChangedListener(mtw);
+
+        SimpleMaskFormatter smf1 = new SimpleMaskFormatter("000.000.000.000.000,00");
+        MaskTextWatcher mtw1 = new MaskTextWatcher(preco, smf1);
+        preco.addTextChangedListener(mtw1);
+
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -84,23 +98,30 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
         try {
             EditText nome = findViewById(R.id.inputNome);
+            EditText data = findViewById(R.id.inputDtHora);
+            EditText preco = findViewById(R.id.inputValor);
             TextInputEditText descricao = findViewById(R.id.inputDescricao);
+
+            produto.setDtEntrada(data.getText().toString());
             produto.setNome(nome.getText().toString());
+            String valor = preco.getText().toString();
+            produto.setPreco(Double.parseDouble(valor));
             produto.setDescricao(descricao.getText().toString());
+
 
             if(imageBitmap != null)
                 produto.addImagens(imageBitmap);
 
             ProdutoService.setProduto(produto);
 
+            Toast.makeText(this, getString(R.string.gravado), Toast.LENGTH_LONG).show();
+            mostrarMain();
+
 
 
         }catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
-
-
-
 
     }
 
@@ -124,6 +145,13 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     public void tirarFoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
+    }
+
+    private void mostrarMain() {
+        Intent intent = new Intent(CadastroProdutosActivity.this,
+                MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
