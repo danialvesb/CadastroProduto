@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9F16242C"
+    android:background="#9FFFFFFF"
     tools:context=".CadastroProdutosActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <include
-                layout="@layout/activity_imagens"
+                layout="@layout/fragment_recycler_view_imagens"
                 android:layout_width="match_parent"
                 android:layout_height="153dp"
                 android:layout_marginBottom="20dp" />
@@ -32,11 +32,10 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@color/colorAccent"
-                android:backgroundTint="#00FFFFFF"
+                android:backgroundTint="#D3000000"
                 android:clickable="true"
                 android:onClick="onClickImage"
-                app:backgroundTint="#00FFFFFF"
+                app:backgroundTint="#F2000000"
                 app:fabCustomSize="80dp"
                 app:fabSize="auto"
                 app:maxImageSize="50dp"
