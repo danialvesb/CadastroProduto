@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
@@ -28,12 +30,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.example.cadastroproduto.adapters.AdaperFoto;
+import com.example.cadastroproduto.adapters.AdapterProduto;
+import com.example.cadastroproduto.adapters.ViewHolderFoto;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -42,7 +48,7 @@ import static android.Manifest.permission_group.CAMERA;
 
 public class CadastroProdutosActivity extends AppCompatActivity{
     private static final int REQUEST_CAMERA = 1;
-    private List<ImageView> listImages;
+    private List<Bitmap> listImages = new ArrayList<>();
     private Produto produto = new Produto();
     private Bitmap imageBitmap;
     private RecyclerView recyclerView;
@@ -57,6 +63,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
         FloatingActionButton fabImage = findViewById(R.id.fabImage);
 //        imageView = findViewById(R.id.imageView);
+        recyclerView = findViewById(R.id.recyclerViewImagens);
 
 
         if (toolbar != null) {
@@ -125,12 +132,16 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             Bundle extras = data.getExtras();
             Bitmap imagemBitmap = (Bitmap) extras.get("data");
             this.imageBitmap = imagemBitmap;
+            this.listImages.add(imagemBitmap);
 
-            ImageView imageView = null;
-            imageView.setImageBitmap(imageBitmap);
+            if(listImages.size() <= 5) {
+                recyclerView.setAdapter(new AdaperFoto(listImages));
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                recyclerView.setLayoutManager(layout);
 
-            if(imagemBitmap != null)
-                recyclerView.addView(imageView);
+            }
+
+
 
         }
         super.onActivityResult(requestCode, resultCode, data);
