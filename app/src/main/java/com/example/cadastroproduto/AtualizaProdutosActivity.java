@@ -39,11 +39,7 @@ public class AtualizaProdutosActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        getSupportActionBar().setTitle(getString(R.string.atualizacao_produtos));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        TextView textView = findViewById(R.id.idMsgmAtzWifi);
-        textView.setText(R.string.msgmatzwifi);
 
         TextView textViewDtUltAtz = findViewById(R.id.idDtUltAtz);
         String cfgDtUltAtz = ConfigSharedPreferences.getString(MyApp.getContext(), "cfgDtUltAtz");
@@ -118,4 +114,5 @@ public class AtualizaProdutosActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

@@ -58,7 +58,7 @@ public class ProdutoService {
 
 
 
-        if (isForcarAtualizacao || sServidorIP != null && !sServidorIP.isEmpty()) {
+        if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
             json = helper.doGet("http://" + sServidorIP + ":8080/produtos");
             bGet = true;
