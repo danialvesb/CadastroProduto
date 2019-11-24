@@ -20,7 +20,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cadastroproduto.adapters.AdapterProduto;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.example.cadastroproduto.utils.AlertUtil;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     List<Produto> listProdutos = new ArrayList<>();
     FloatingActionButton fab;
     Integer inputTypeEditSearch;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -77,16 +81,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 // Snackbar.make(view, "Leitor de código barras nã o disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
-
-
-        list = findViewById(R.id.listview);
+        recyclerView = findViewById(R.id.recyclerView);
         buscaProdutosServidor(false);
-        list.setOnItemClickListener(this);
-        editsearch = findViewById(R.id.search);
+//        list.setOnItemClickListener(this);
+//        editsearch = findViewById(R.id.search);
 
 
         if (listProdutos != null) {
-            editsearch.setOnQueryTextListener(this);
+//            editsearch.setOnQueryTextListener(this);
             Toast.makeText(this, listProdutos.size() + " produtos cadastrados.", Toast.LENGTH_LONG).show();
         }
 
@@ -95,13 +97,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Boolean bFocoCpoPesquisa = ConfigSharedPreferences.getBoolean(this, "cfgFocoCpoPesquisa");
 
         //Definindo o comportamento do layout
-        if (bFocoCpoPesquisa = false)
+        if (false)
             ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
         else {
-            list.requestFocus();
+//            list.requestFocus();
         }
 
-        inputTypeEditSearch = editsearch.getInputType();
+//        inputTypeEditSearch = editsearch.getInputType();
 
         if (inputTypeEditSearch == null) {
             inputTypeEditSearch = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
@@ -120,8 +122,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         if (listProdutos != null) {
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listProdutos);
-            list.setAdapter(adapter);
+            recyclerView.setAdapter(new AdapterProduto(listProdutos));
+            RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(layout);
+
+
+
         }
     }
 

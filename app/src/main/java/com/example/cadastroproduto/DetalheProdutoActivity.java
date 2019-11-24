@@ -26,7 +26,7 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
         Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
-        TextView textViewEan = findViewById(R.id.idEan);
+
         TextView textViewDescricao = findViewById(R.id.idDescricao);
         TextView textViewPcoVenda = findViewById(R.id.idPcoVenda);
 
