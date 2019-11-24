@@ -75,7 +75,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         MaskTextWatcher mtw = new MaskTextWatcher(data, smf);
         data.addTextChangedListener(mtw);
 
-        SimpleMaskFormatter smf1 = new SimpleMaskFormatter("NNN.NNN.NNN.NNN.NNN,NN");
+        SimpleMaskFormatter smf1 = new SimpleMaskFormatter("NNN,NN");
         MaskTextWatcher mtw1 = new MaskTextWatcher(preco, smf1);
         preco.addTextChangedListener(mtw1);
 
