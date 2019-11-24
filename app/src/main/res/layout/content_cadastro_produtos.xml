@@ -140,13 +140,6 @@
                 app:backgroundTint="#4CAF50"
                 app:srcCompat="@drawable/ic_add_black_24dp" />
 
-            <EditText
-                android:id="@+id/editText5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number" />
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
