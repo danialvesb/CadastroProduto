@@ -86,6 +86,7 @@ public class AtualizaProdutosActivity extends AppCompatActivity {
 
             try {
                 listProdutos = ProdutoService.getProdutos(true);
+
             } catch (IOException e) {
                 listProdutos = null;
             }
