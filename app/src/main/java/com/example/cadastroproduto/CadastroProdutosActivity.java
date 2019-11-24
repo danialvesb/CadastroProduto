@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -99,6 +100,18 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
     public void onClickImage(View view) {
         tirarFoto();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void clickVoltar(View view) {
+        finish();
     }
 
     public void tirarFoto() {
