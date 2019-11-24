@@ -26,7 +26,7 @@ public class SobreActivity extends AppCompatActivity {
         TextView textViewSite = findViewById(R.id.idCurso);
         textViewSite.setText(R.string.curso);
 
-        TextView textViewNome = findViewById(R.id.idNome);
+        TextView textViewNome = findViewById(R.id.idNome0);
         textViewNome.setText(R.string.nome0);
 
         TextView textViewNome2 = findViewById(R.id.idNome2);
