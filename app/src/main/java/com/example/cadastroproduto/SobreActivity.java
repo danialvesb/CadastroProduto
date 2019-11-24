@@ -23,11 +23,17 @@ public class SobreActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.menu_sobre));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView textViewSite = findViewById(R.id.idSite);
-        textViewSite.setText(R.string.site);
+        TextView textViewSite = findViewById(R.id.idCurso);
+        textViewSite.setText(R.string.curso);
 
-        TextView textViewEmail = findViewById(R.id.idEmail);
-        textViewEmail.setText(R.string.email);
+        TextView textViewNome = findViewById(R.id.idNome);
+        textViewNome.setText(R.string.nome0);
+
+        TextView textViewNome2 = findViewById(R.id.idNome2);
+        textViewNome2.setText(R.string.nome01);
+
+        TextView textViewProf = findViewById(R.id.idProfessor);
+        textViewProf.setText(R.string.professor);
 
         TextView textViewVersao = findViewById(R.id.idVersao);
         textViewVersao.setText(" Versão " + MyApp.versionName(this));

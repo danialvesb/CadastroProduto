@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DDM Produto</string>
-    <string name="app_full_name">DDM Consulta Produtos</string>
+    <string name="app_full_name">DDM Produtos Logítica</string>
 
     <string name="content_main_pesquisar_produto">Pesquisar Produto</string>
     <string name="nenhum_produto_encontrado">Nenhum produto encontrado.</string>
@@ -30,6 +30,13 @@
     <string name="msgmdtultatz">Data da última atualização indefinida.</string>
 
     <string name="sobre">Sobre</string>
+
+    <string name="professor">Professor: Sandro Teixeira</string>
+    <string name="curso">Análise e Desenvolvimento de Sistemas</string>
+    <string name="nome1">Alunos: Daniel Barros e Daniel Alves</string>
+    <string name="nome0">Daniel Barros 201710602</string>
+    <string name="nome01">Daniel Alves 201721143</string>
+
     <string name="site">http://www.ddm.com.br</string>
     <string name="email">contato@ddm.com.br</string>
     <string name="versao">Versão</string>
