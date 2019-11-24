@@ -69,15 +69,15 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
         //Mascáras
         EditText data = findViewById(R.id.inputDtHora);
-        EditText preco = findViewById(R.id.inputValor);
+//         EditText preco = findViewById(R.id.inputValor);
 
         SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN");
         MaskTextWatcher mtw = new MaskTextWatcher(data, smf);
         data.addTextChangedListener(mtw);
 
-        SimpleMaskFormatter smf1 = new SimpleMaskFormatter("NNN.NNN.NNN.NNN.NNN,NN");
-        MaskTextWatcher mtw1 = new MaskTextWatcher(preco, smf1);
-        preco.addTextChangedListener(mtw1);
+//        SimpleMaskFormatter smf1 = new SimpleMaskFormatter("NNN.NNN.NNN.NNN.NNN,NN");
+//        MaskTextWatcher mtw1 = new MaskTextWatcher(preco, smf1);
+//        preco.addTextChangedListener(mtw1);
 
 
         if (toolbar != null) {
