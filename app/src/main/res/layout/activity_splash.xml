@@ -9,12 +9,11 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="341dp"
-        android:layout_height="416dp"
+        android:layout_width="394dp"
+        android:layout_height="312dp"
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/logoddmpreco"
-        app:layout_constraintBottom_toTopOf="@+id/idVersao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +21,16 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="410dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center_horizontal"
         android:text="@string/professor"
         android:textColor="#454545"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,26 +41,28 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="60dp"
         android:gravity="center_horizontal"
         android:text="@string/curso"
         android:textColor="#454545"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_marginTop="60dp"
+        android:layout_width="410dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="58dp"
+        android:layout_marginBottom="14dp"
         android:gravity="center_horizontal"
         android:text="@string/nome1"
         android:textColor="#454545"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,19 +78,18 @@
         android:gravity="center_horizontal"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="398dp"
-        android:layout_height="98dp"
+        android:layout_width="406dp"
+        android:layout_height="85dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.638"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
         app:srcCompat="@drawable/unianhanguera" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
