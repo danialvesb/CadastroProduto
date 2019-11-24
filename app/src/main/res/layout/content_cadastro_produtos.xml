@@ -104,7 +104,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:textColor="@android:color/background_dark"
                 android:textColorHint="#00000000"
                 android:textCursorDrawable="@color/colorAccent" />
@@ -140,6 +140,13 @@
                 android:onClick="onclickSalvar"
                 app:backgroundTint="#4CAF50"
                 app:srcCompat="@drawable/ic_add_black_24dp" />
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
