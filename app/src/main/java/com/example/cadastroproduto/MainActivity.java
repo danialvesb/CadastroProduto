@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Boolean bFocoCpoPesquisa = ConfigSharedPreferences.getBoolean(this, "cfgFocoCpoPesquisa");
 
         //Definindo o comportamento do layout
-        if (bFocoCpoPesquisa)
+        if (bFocoCpoPesquisa = false)
             ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
         else {
             list.requestFocus();
