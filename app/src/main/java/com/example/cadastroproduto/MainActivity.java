@@ -242,8 +242,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
 
                 if (listProdutos != null) {
-                    adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listProdutos);
-                    list.setAdapter(adapter);
+                    recyclerView.setAdapter(new AdapterProduto(listProdutos));
+                    RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setLayoutManager(layout);
                     Toast.makeText(this, R.string.produtosatzsucesso, Toast.LENGTH_LONG).show();
                 }
             }
