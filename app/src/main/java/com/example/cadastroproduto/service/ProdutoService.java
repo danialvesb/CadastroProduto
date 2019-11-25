@@ -37,11 +37,8 @@ public class ProdutoService {
         String mensagem2 = "";
         String networkType = "WIFI";
 
-//        String networkType = NetworkType.getNetworkClass(MyApp.getContext()); está ocorrendo problema resolver depois
-
 
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");//é possível chamar getString pq é static
-        // Log.w("DDM - Log Sandro", "sServidorIP = " + sServidorIP);
 
         if (networkType.equals("-") || !networkType.equals("WIFI")) {
             String mensagem = (networkType.equals("-") ? "Sem conexão com a Internet." : "Conexão " + networkType);
