@@ -2,7 +2,6 @@ package com.example.cadastroproduto;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 
@@ -25,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cadastroproduto.adapters.AdapterProduto;
-import com.example.cadastroproduto.adapters.ItemClickListener;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.example.cadastroproduto.utils.AlertUtil;
@@ -42,7 +40,7 @@ import java.util.List;
 
 
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     ListView list;
     ArrayAdapter<Produto> adapter;
     SearchView editsearch;
@@ -83,12 +81,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         recyclerView = findViewById(R.id.recyclerView);
         buscaProdutosServidor(false);
 
+
 //        editsearch = findViewById(R.id.search);
 
 
         if (listProdutos != null) {
 //            editsearch.setOnQueryTextListener(this);
             Toast.makeText(this, listProdutos.size() + " produtos cadastrados.", Toast.LENGTH_LONG).show();
+
+
+            AdapterProduto adapterProduto = new AdapterProduto(listProdutos);
+            adapterProduto.setOnItemClickListener(new AdapterProduto.ClickListener() {
+                @Override
+                public void onItemClick(int position, View v) {
+                    mostraDetalheProduto(listProdutos.get(position));
+                }
+            });
+
         }
 
 
@@ -122,12 +131,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         if (listProdutos != null) {
             AdapterProduto adapterProduto = new AdapterProduto(listProdutos);
-            adapterProduto.setOnItemClickListener(new ItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    Log.d("Olá", "Elemento " + position + " clicado.");
-                }
-            });
 
             recyclerView.setAdapter(adapterProduto);
 
@@ -139,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+
+    //filtro
     @Override
     public boolean onQueryTextSubmit(String query) {
         if (listProdutos.contains(query)) {
@@ -286,15 +291,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int idx, long id) {
-        Produto produto = (Produto) adapterView.getAdapter().getItem(idx);
-        mostraDetalheProduto(produto);
-    }
+
+
+
 
     private void mostraDetalheProduto(Produto produto) {
         Intent intent = new Intent(this, DetalheProdutoActivity.class);
         intent.putExtra("produto", produto);
         startActivity(intent);
     }
+
+
+
 }
