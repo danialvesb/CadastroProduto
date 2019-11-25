@@ -15,15 +15,17 @@ import java.util.List;
 
 public class AdapterProduto extends RecyclerView.Adapter {
     public  List<Produto> produtos;
+    private static ItemClickListener itemClickListener;
 
     public AdapterProduto(List<Produto> produtosPassados) {
         this.produtos = produtosPassados;
     }
 
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(MyApp.getContext()).inflate(R.layout.fragment_item_produto, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_item_produto, parent, false);
 
         ViewHolder holder = new ViewHolder(view);
         return holder;
@@ -45,7 +47,8 @@ public class AdapterProduto extends RecyclerView.Adapter {
         return produtos.size();
     }
 
-
-
+    public void setOnItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
 
 }

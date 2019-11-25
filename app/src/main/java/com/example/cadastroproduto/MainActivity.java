@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cadastroproduto.adapters.AdapterProduto;
+import com.example.cadastroproduto.adapters.ItemClickListener;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.example.cadastroproduto.utils.AlertUtil;
@@ -73,17 +75,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
-//                startActivityForResult(intent, 14);
                 Intent intent = new Intent(MyApp.getContext(), CadastroProdutosActivity.class);
                 startActivity(intent);
 
-                // Snackbar.make(view, "Leitor de código barras nã o disponível nesta versão.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
         recyclerView = findViewById(R.id.recyclerView);
         buscaProdutosServidor(false);
-//        list.setOnItemClickListener(this);
+
 //        editsearch = findViewById(R.id.search);
 
 
@@ -122,7 +121,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         if (listProdutos != null) {
-            recyclerView.setAdapter(new AdapterProduto(listProdutos));
+            AdapterProduto adapterProduto = new AdapterProduto(listProdutos);
+            adapterProduto.setOnItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Log.d("Olá", "Elemento " + position + " clicado.");
+                }
+            });
+
+            recyclerView.setAdapter(adapterProduto);
+
             RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(layout);
 
