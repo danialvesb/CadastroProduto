@@ -69,7 +69,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
         //Mascáras
         EditText data = findViewById(R.id.inputDtHora);
-//         EditText preco = findViewById(R.id.inputValor);
+        EditText preco = findViewById(R.id.inputValor);
 
         SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN");
         MaskTextWatcher mtw = new MaskTextWatcher(data, smf);
