@@ -68,12 +68,8 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.recyclerViewImagens);
 
         //Mascáras
-        EditText data = findViewById(R.id.inputDtHora);
         EditText preco = findViewById(R.id.inputValor);
 
-        SimpleMaskFormatter smf = new SimpleMaskFormatter("NN/NN/NNNN");
-        MaskTextWatcher mtw = new MaskTextWatcher(data, smf);
-        data.addTextChangedListener(mtw);
 
         SimpleMaskFormatter smf1 = new SimpleMaskFormatter("NNN.NN");
         MaskTextWatcher mtw1 = new MaskTextWatcher(preco, smf1);
@@ -98,11 +94,9 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
         try {
             EditText nome = findViewById(R.id.inputNome);
-            EditText data = findViewById(R.id.inputDtHora);
             EditText preco = findViewById(R.id.inputValor);
             TextInputEditText descricao = findViewById(R.id.inputDescricao);
 
-            produto.setDtEntrada(data.getText().toString());
             produto.setNome(nome.getText().toString());
             String valor = preco.getText().toString();
             produto.setPreco(Double.parseDouble(valor));
@@ -113,6 +107,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
                 produto.addImagens(imageBitmap);
 
             ProdutoService.setProduto(produto);
+
 
             Toast.makeText(this, getString(R.string.gravado), Toast.LENGTH_LONG).show();
             mostrarMain();
