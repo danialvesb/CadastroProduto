@@ -3,11 +3,12 @@ package com.example.cadastroproduto.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cadastroproduto.MyApp;
 import com.example.cadastroproduto.R;
 import com.example.cadastroproduto.model.Produto;
 
@@ -15,12 +16,12 @@ import java.util.List;
 
 public class AdapterProduto extends RecyclerView.Adapter {
     public  List<Produto> produtos;
-    private static ItemClickListener itemClickListener;
+    private static ClickListener clickListener;
+
 
     public AdapterProduto(List<Produto> produtosPassados) {
         this.produtos = produtosPassados;
     }
-
 
     @NonNull
     @Override
@@ -47,8 +48,37 @@ public class AdapterProduto extends RecyclerView.Adapter {
         return produtos.size();
     }
 
-    public void setOnItemClickListener(ItemClickListener itemClickListener){
-        this.itemClickListener = itemClickListener;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        final TextView idProduto;
+        final TextView nomeProduto;
+        final ImageView imagem;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            idProduto = (TextView) itemView.findViewById(R.id.item_idProduto);
+            nomeProduto = (TextView) itemView.findViewById(R.id.item_nomeProduto);
+            imagem = (ImageView) itemView.findViewById(R.id.item_imagemProduto);
+            itemView.setOnClickListener(this);
+
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(), v);
+
+        }
+    }
+
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        AdapterProduto.clickListener = clickListener;
+    }
+
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
     }
 
 }
