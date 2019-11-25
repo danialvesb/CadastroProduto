@@ -29,6 +29,11 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.detalhe_imagens);
+        TextView preco = findViewById(R.id.detalhe_preco);
+        TextView descricao = findViewById(R.id.detalhe_descricao);
+        TextView dtEntrada = findViewById(R.id.detalhe_dt_entrada);
+        TextView nome = findViewById(R.id.detalhe_nome);
+
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -37,6 +42,14 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         Produto produto = (Produto) getIntent().getSerializableExtra("produto");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bitmaps = produto.getImagens();
+
+        String precoS = ""+produto.getPreco();
+        preco.setText(precoS);
+        descricao.setText(produto.getDescricao());
+        dtEntrada.setText(produto.getDtEntrada());
+        nome.setText(produto.getNome());
+
+
 
         if (bitmaps.size() > 0) {
             recyclerView.setAdapter(new AdaperFoto(bitmaps));
