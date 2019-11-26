@@ -3,6 +3,7 @@
     <string name="app_full_name">DDM Produtos Logística</string>
 
     <string name="content_main_pesquisar_produto">Pesquisar Produto</string>
+    <string name="exclui">Excluido com sucesso!</string>
     <string name="nenhum_produto_encontrado">Nenhum produto encontrado.</string>
     <string name="cliqueprodutodesejadoverdetalhes">Clique no produto desejado para visualizar seus detalhes.</string>
     <string name="erroobterprodutos">Erro ao obter produtos</string>

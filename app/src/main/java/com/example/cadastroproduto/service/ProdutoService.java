@@ -118,6 +118,17 @@ public class ProdutoService {
 
     }
 
+    public static void deleteProduto(Long id) throws IOException {
+        HttpHelper httpHelper = new HttpHelper();
+        String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+
+        httpHelper.doDelete("http://" + sServidorIP + ":8080/produtos/"+id);
+
+    }
+
+
+
+
     private static String getJsonConfiguracao() {
         String json = getString(MyApp.getContext(), "cfgJsonProdutos");
         return json;

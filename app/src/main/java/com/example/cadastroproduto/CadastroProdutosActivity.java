@@ -35,6 +35,7 @@ import com.example.cadastroproduto.adapters.AdapterProduto;
 import com.example.cadastroproduto.adapters.ViewHolderFoto;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
+import com.example.cadastroproduto.utils.DateUtil;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -98,6 +99,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             TextInputEditText descricao = findViewById(R.id.inputDescricao);
 
             produto.setNome(nome.getText().toString());
+
             String valor = preco.getText().toString();
             produto.setPreco(Double.parseDouble(valor));
             produto.setDescricao(descricao.getText().toString());

@@ -22,6 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:autofillHints="f"
         android:iconifiedByDefault="false"
         android:inputType="textCapCharacters"
         android:queryHint="@string/content_main_pesquisar_produto"

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
         recyclerView = findViewById(R.id.recyclerView);
-        buscaProdutosServidor(false);
+        buscaProdutosServidor(true);
 
 
 //        editsearch = findViewById(R.id.search);
@@ -164,10 +164,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        adapter.getFilter().filter(newText);
+//        adapter.getFilter().filter(newText);
 
         if (newText.isEmpty()) {
-            editsearch.setInputType(inputTypeEditSearch);
+//            editsearch.setInputType(inputTypeEditSearch);
         } else {
             if (newText.substring(0, 1).matches("[0-9]")) {
 //                editsearch.setInputType(InputType.TYPE_CLASS_NUMBER);

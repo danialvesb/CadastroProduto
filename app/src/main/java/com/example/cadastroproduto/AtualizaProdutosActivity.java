@@ -108,6 +108,7 @@ public class AtualizaProdutosActivity extends AppCompatActivity {
                     @Override
                     public void PositiveMethod(final DialogInterface dialog, final int id) {
                         TaskGetJsonServidor taskGetJsonServidor = new TaskGetJsonServidor();
+
                         taskGetJsonServidor.execute();  // Pode-se passar n argumentos para este método execute que serão recebidos por "String... params" de doInBackground
                     }
                     @Override
