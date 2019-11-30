@@ -21,7 +21,6 @@ import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.example.cadastroproduto.utils.AlertUtil;
 import com.example.cadastroproduto.utils.IAlertUtil;
-import com.example.cadastroproduto.utils.MoedaUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         TextView descricao = findViewById(R.id.detalhe_descricao);
         TextView dtEntrada = findViewById(R.id.detalhe_dt_entrada);
         TextView nome = findViewById(R.id.detalhe_nome);
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
+        FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
 
 
         if (toolbar != null) {
@@ -70,80 +69,35 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
         }
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertUtil.getConfirmDialog(MyApp.getContext(), AlertUtil.DDM, "Deletar produto ?", "Sim", "Não", false,
+                        new IAlertUtil() {
+                            @Override
+                            public void PositiveMethod(DialogInterface dialog, int id) {
+//                                try {
+//                                    ProdutoService.deleteProduto(produto.getId());
+//                                    mostrarMain();
+//
+//                                }catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
 
-                try {
-                    ProdutoService.deleteProduto(produto.getId());
-                    Toast.makeText(DetalheProdutoActivity.this, "Produto excluído" ,Toast.LENGTH_LONG).show();
+                            }
 
-                    mostrarMain();
+                            @Override
+                            public void NegativeMethod(DialogInterface dialog, int id) {
 
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                            }
+                        }
+                );
             }
         });
 
 
 
     }
-
-    private class TaskGetJsonServidor extends AsyncTask<String,Integer,List<Produto>> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        private void setMensagemRetorno(boolean isAtualizou) {
-            Intent intent = getIntent();
-            intent.putExtra("mensagem", (isAtualizou ? "Sim" : "Não"));
-            setResult(13, intent);
-        }
-
-
-        @Override
-        protected List<Produto> doInBackground(String... params) {
-            listProdutos = new ArrayList<>();
-            listProdutos = null;
-
-            try {
-                listProdutos = ProdutoService.getProdutos(true);
-
-            } catch (IOException e) {
-                listProdutos = null;
-            }
-
-            return listProdutos;
-        }
-
-        @Override
-        protected void onPostExecute(List<Produto> listProdutos) {
-            setMensagemRetorno(listProdutos != null);
-            finish();
-        }
-    }
-
-
-
-    public void clickAtualizar(View view) {
-        AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Atualizar produtos ?", "Sim", "Não", false,
-                new IAlertUtil() {
-                    @Override
-                    public void PositiveMethod(final DialogInterface dialog, final int id) {
-                        DetalheProdutoActivity.TaskGetJsonServidor taskGetJsonServidor = new DetalheProdutoActivity.TaskGetJsonServidor();
-
-                        taskGetJsonServidor.execute();  // Pode-se passar n argumentos para este método execute que serão recebidos por "String... params" de doInBackground
-                    }
-                    @Override
-                    public void NegativeMethod(DialogInterface dialog, int id) {
-                    }
-                });
-    }
-
 
 
 
@@ -153,6 +107,9 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void clickAtualizar(View view) {
+        }
 
 
 
@@ -168,7 +125,5 @@ public class DetalheProdutoActivity extends AppCompatActivity {
     public void clickVoltar(View view) {
         finish();
     }
-
-
 
 }
