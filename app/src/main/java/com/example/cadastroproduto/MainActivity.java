@@ -59,16 +59,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //É criada uma thread para executar as requisições
 
         Toolbar toolbar =  findViewById(R.id.toolbar);
-        Toolbar barraInferiorEsquerda = findViewById(R.id.barraInferiorEsquerda);
-        Toolbar barraInferiorDireita = findViewById(R.id.barraInferiorDireita);
 
-        //comentei isso pq estava fazendo o app parar de  funcionar
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
         getSupportActionBar().setTitle(getString(R.string.app_full_name));
 
-
-        //Outro erro que estava ocorrendo, eu comentei essa linha para não ter scan, mas comentei o fab também, e ele ficou null,
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

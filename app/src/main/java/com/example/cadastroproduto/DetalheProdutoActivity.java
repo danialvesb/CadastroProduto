@@ -95,7 +95,14 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         }
 
     public void clickEditar(View view) {
-        mostrarCadastroDeProdutos();
+        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
+        Produto produto2 = new Produto();
+
+        produto2.setId(produto.getId());
+        produto2.setPreco(produto.getPreco());
+        produto2.setDescricao(produto.getDescricao());
+        produto2.setNome(produto.getNome());
+        mostrarCadastroDeProdutos(produto2);
 
     }
 
@@ -109,15 +116,10 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void mostrarCadastroDeProdutos() {
+    private void mostrarCadastroDeProdutos(Produto produto) {
         Intent intent = new Intent(DetalheProdutoActivity.this, CadastroProdutosActivity.class);
+        intent.putExtra("produto", produto);
         startActivity(intent);
-    }
-
-
-
-    public void clickVoltar(View view) {
-        finish();
     }
 
     private void mostrarMain() {

@@ -100,8 +100,11 @@ public class ProdutoService {
         produtoJson.put("dtSaida", produto.getDtSaida());
 
 
-        helper.doPost("http://" + sServidorIP + ":"+sServidorPorta+"/produtos", produtoJson, "UTF-8");
-
+        if (produto.getId() == 0) {
+            helper.doPost("http://" + sServidorIP + ":"+sServidorPorta+"/produtos", produtoJson, "UTF-8");
+        }else {
+            helper.doPut("http://" + sServidorIP + ":"+sServidorPorta+"/produtos/"+produto.getId(), produtoJson, "UTF-8");
+        }
 
 
     }

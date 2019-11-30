@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -61,20 +62,29 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_produtos);
-
+        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
-
-        FloatingActionButton fabImage = findViewById(R.id.fabImage);
-//        imageView = findViewById(R.id.imageView);
         recyclerView = findViewById(R.id.recyclerViewImagens);
-
-        //Mascáras
+        EditText nome = findViewById(R.id.inputNome);
         EditText preco = findViewById(R.id.inputValor);
+        TextInputEditText descricao = findViewById(R.id.inputDescricao);
 
+        if (produto != null) {
+            if (produto.getNome() != null)
+                nome.setText(produto.getNome());
 
-        SimpleMaskFormatter smf1 = new SimpleMaskFormatter("NNN.NN");
-        MaskTextWatcher mtw1 = new MaskTextWatcher(preco, smf1);
-        preco.addTextChangedListener(mtw1);
+            if (produto.getPreco() != null)
+                preco.setText(produto.getPreco().toString());
+
+            if (produto.getDescricao() != null)
+                descricao.setText(produto.getDescricao());
+
+//            if (produto.getImagens() != null)
+//                recyclerView.setAdapter(new AdaperFoto(produto.getImagens()));
+//                RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//                recyclerView.setLayoutManager(layout);
+
+        }
 
 
         if (toolbar != null) {
@@ -92,26 +102,34 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     }
 
     public void onclickSalvar(View view) {
+        EditText nome = findViewById(R.id.inputNome);
+        EditText preco = findViewById(R.id.inputValor);
+        TextInputEditText descricao = findViewById(R.id.inputDescricao);
+        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
         try {
-            EditText nome = findViewById(R.id.inputNome);
-            EditText preco = findViewById(R.id.inputValor);
-            TextInputEditText descricao = findViewById(R.id.inputDescricao);
-
-            produto.setNome(nome.getText().toString());
-
-            String valor = preco.getText().toString();
-            produto.setPreco(Double.parseDouble(valor));
-            produto.setDescricao(descricao.getText().toString());
+                this.produto.setNome(nome.getText().toString());
+                String valor = preco.getText().toString();
+                this.produto.setPreco(Double.parseDouble(valor));
+                this.produto.setDescricao(descricao.getText().toString());
 
 
-            if(imageBitmap != null)
-                produto.addImagens(imageBitmap);
+                if(imageBitmap != null)
+                    this.produto.addImagens(imageBitmap);
 
-            ProdutoService.setProduto(produto);
+                if (produto == null) {
+                    ProdutoService.setProduto(this.produto);
+                }else {
+                    this.produto.setId(produto.getId());
+                    this.produto.setDtEntrada(produto.getDtEntrada());
+                    this.produto.setDtSaida(produto.getDtSaida());
 
 
-            Toast.makeText(this, getString(R.string.gravado), Toast.LENGTH_LONG).show();
+                    ProdutoService.setProduto(this.produto);
+
+                }
+
+
             mostrarMain();
 
 
@@ -121,6 +139,8 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         }
 
     }
+
+
 
 
     public void onClickImage(View view) {
@@ -135,20 +155,14 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    public void clickVoltar(View view) {
-        finish();
-    }
-
     public void tirarFoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
     }
 
     private void mostrarMain() {
-        Intent intent = new Intent(CadastroProdutosActivity.this,
-                MainActivity.class);
-        startActivity(intent);
         finish();
+        Toast.makeText(this, R.string.salvo, Toast.LENGTH_LONG).show();
     }
 
     @Override
