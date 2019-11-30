@@ -84,22 +84,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+    <EditText
+        android:id="@+id/id_porta"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:layout_marginTop="8dp"
+        android:width="300dp"
+        android:height="50dp"
+        android:autofillHints="@string/porta_servidor"
+        android:digits="0123456789."
+        android:gravity="center"
+        android:hint="@string/porta_servidor"
+        android:inputType="number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idServidorIP" />
+
     <Switch
         android:id="@+id/idFocoCpoPesquisa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/posicionar_foco_teclado"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idServidorIP" />
+        app:layout_constraintTop_toBottomOf="@+id/id_porta" />
 
     <Switch
         android:id="@+id/idSenhaAcessoCfg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/id_senha_acesso"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idFocoCpoPesquisa" />
 
@@ -107,7 +128,7 @@
         android:id="@+id/idSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:autofillHints="@string/senha"
         android:ems="10"
         android:gravity="center"

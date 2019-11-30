@@ -54,7 +54,7 @@
     <string name="id_senha_acesso">Exigir senha para acesso às configurações</string>
     <string name="posicionar_foco_teclado">Posicionar no campo de pesquisa ao iniciar</string>
     <string name="id_servidor">IP do Servidor</string>
-    <string name="ip_servidor">IP do Servidor Local</string>
+    <string name="ip_servidor">IP e porta do Servidor Local</string>
     <string name="dt_hora_entrada">Data e hora de entrada</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -152,4 +152,6 @@
     <string name="action_settings">Settings</string>
     <string name="id_produto">id</string>
     <string name="visualizar">Visualizar</string>
+    <string name="porta_servidor">Porta</string>
+    <string name="produto_deletado">Produto deletado</string>
 </resources>

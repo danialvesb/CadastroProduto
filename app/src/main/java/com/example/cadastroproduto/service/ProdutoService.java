@@ -39,25 +39,11 @@ public class ProdutoService {
 
 
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");//é possível chamar getString pq é static
-
-        if (networkType.equals("-") || !networkType.equals("WIFI")) {
-            String mensagem = (networkType.equals("-") ? "Sem conexão com a Internet." : "Conexão " + networkType);
-
-            if (sServidorIP != null && !sServidorIP.isEmpty())
-                mensagem2 = MyApp.getContext().getResources().getString(R.string.produtoscarregadosdopropriocelular);
-
-            Toast.makeText(MyApp.getContext(), mensagem + "\n" + mensagem2, Toast.LENGTH_LONG).show();
-            isForcarAtualizacao = false;
-        }
-        //A lógica acima é simples, primeiro verifica se tem conexão com a internet, e retorna a mesagem sem conexão com a internet.
-        //Depois verifica se o servidor ip foi configurado, se não tiver é retornado a mensagem de produtos carregados do próprio celular.
-        //por fim como não tem conexão com o servidor forçar atualização fica false.
-
-
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");//é possível chamar getString pq é static
 
         if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
-            json = helper.doGet("http://" + sServidorIP + ":8080/produtos");
+            json = helper.doGet("http://" + sServidorIP +":"+sServidorPorta+ "/produtos");
             bGet = true;
         } else {
             json = getJsonConfiguracao();
@@ -88,6 +74,8 @@ public class ProdutoService {
 
     public static  void setProduto(Produto produto) throws IOException, JSONException {
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");
+
         HttpHelper helper = new HttpHelper();
         helper.setContentType("application/json");
         helper.setCharsetToEncode("UTF-8");
@@ -112,7 +100,7 @@ public class ProdutoService {
         produtoJson.put("dtSaida", produto.getDtSaida());
 
 
-        helper.doPost("http://" + sServidorIP + ":8080/produtos", produtoJson, "UTF-8");
+        helper.doPost("http://" + sServidorIP + ":"+sServidorPorta+"/produtos", produtoJson, "UTF-8");
 
 
 
@@ -121,8 +109,9 @@ public class ProdutoService {
     public static void deleteProduto(Long id) throws IOException {
         HttpHelper httpHelper = new HttpHelper();
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");
 
-        httpHelper.doDelete("http://" + sServidorIP + ":8080/produtos/"+id);
+        httpHelper.doDelete("http://" + sServidorIP + ":"+sServidorPorta+"/produtos/"+id);
 
     }
 

@@ -115,8 +115,8 @@
                 android:layout_marginBottom="8dp"
                 android:clickable="true"
                 android:onClick="onclickSalvar"
-                app:backgroundTint="#4CAF50"
-                app:srcCompat="@drawable/ic_add_black_24dp" />
+                app:backgroundTint="#000000"
+                app:srcCompat="@drawable/ic_save_black_24dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

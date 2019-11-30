@@ -30,7 +30,7 @@ import java.util.List;
 public class DetalheProdutoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Bitmap> bitmaps = new ArrayList<>();
-    private List<Produto> listProdutos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +43,15 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         TextView descricao = findViewById(R.id.detalhe_descricao);
         TextView dtEntrada = findViewById(R.id.detalhe_dt_entrada);
         TextView nome = findViewById(R.id.detalhe_nome);
-        FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
-
+        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 
-        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Detalhe Produto");
         bitmaps = produto.getImagens();
 
         String precoS = ""+produto.getPreco();
@@ -68,49 +68,36 @@ public class DetalheProdutoActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(layout);
 
         }
-
-        fabDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertUtil.getConfirmDialog(MyApp.getContext(), AlertUtil.DDM, "Deletar produto ?", "Sim", "Não", false,
-                        new IAlertUtil() {
-                            @Override
-                            public void PositiveMethod(DialogInterface dialog, int id) {
-//                                try {
-//                                    ProdutoService.deleteProduto(produto.getId());
-//                                    mostrarMain();
-//
-//                                }catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-
-                            }
-
-                            @Override
-                            public void NegativeMethod(DialogInterface dialog, int id) {
-
-                            }
-                        }
-                );
-            }
-        });
-
-
-
     }
 
+    public void clickDeletar(View view) {
+        AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Deletar produto ?", "Sim", "Não", false,
+                new IAlertUtil() {
+                    @Override
+                    public void PositiveMethod(DialogInterface dialog, int id) {
+                                try {
+                                    final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
+                                    ProdutoService.deleteProduto(produto.getId());
+                                    mostrarMain();
 
-    private void mostrarMain() {
-        Intent intent = new Intent(DetalheProdutoActivity.this,
-                MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
+                                }catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
-    public void clickAtualizar(View view) {
+                    }
+
+                    @Override
+                    public void NegativeMethod(DialogInterface dialog, int id) {
+
+                    }
+                });
         }
 
+    public void clickEditar(View view) {
+        mostrarCadastroDeProdutos();
+
+    }
 
 
     @Override
@@ -122,8 +109,21 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void mostrarCadastroDeProdutos() {
+        Intent intent = new Intent(DetalheProdutoActivity.this, CadastroProdutosActivity.class);
+        startActivity(intent);
+    }
+
+
+
     public void clickVoltar(View view) {
         finish();
     }
+
+    private void mostrarMain() {
+        finish();
+        Toast.makeText(this, R.string.produto_deletado, Toast.LENGTH_LONG).show();
+    }
+
 
 }
