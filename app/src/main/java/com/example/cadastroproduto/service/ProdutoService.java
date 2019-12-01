@@ -10,6 +10,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,25 +40,11 @@ public class ProdutoService {
 
 
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");//é possível chamar getString pq é static
-
-        if (networkType.equals("-") || !networkType.equals("WIFI")) {
-            String mensagem = (networkType.equals("-") ? "Sem conexão com a Internet." : "Conexão " + networkType);
-
-            if (sServidorIP != null && !sServidorIP.isEmpty())
-                mensagem2 = MyApp.getContext().getResources().getString(R.string.produtoscarregadosdopropriocelular);
-
-            Toast.makeText(MyApp.getContext(), mensagem + "\n" + mensagem2, Toast.LENGTH_LONG).show();
-            isForcarAtualizacao = false;
-        }
-        //A lógica acima é simples, primeiro verifica se tem conexão com a internet, e retorna a mesagem sem conexão com a internet.
-        //Depois verifica se o servidor ip foi configurado, se não tiver é retornado a mensagem de produtos carregados do próprio celular.
-        //por fim como não tem conexão com o servidor forçar atualização fica false.
-
-
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");//é possível chamar getString pq é static
 
         if (isForcarAtualizacao && sServidorIP != null && !sServidorIP.isEmpty()) {
             HttpHelper helper = new HttpHelper();
-            json = helper.doGet("http://" + sServidorIP + ":8080/produtos");
+            json = helper.doGet("http://" + sServidorIP +":"+sServidorPorta+ "/produtos");
             bGet = true;
         } else {
             json = getJsonConfiguracao();
@@ -72,7 +59,7 @@ public class ProdutoService {
         } else {
             produtos = parserJSON(json);
 
-            if (produtos == null || produtos.isEmpty()) {
+            if (false) {
                 produtos = getListaProdutosConfiguracao();
             }
             else {
@@ -86,8 +73,37 @@ public class ProdutoService {
         return produtos;
     }
 
+    public static Produto getProduto(Long id) throws IOException {
+        Produto produto = null;
+        boolean bGet = false;
+        String json = "";
+        String mensagem2 = "";
+
+        String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");//é possível chamar getString pq é static
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");//é possível chamar getString pq é static
+
+
+        HttpHelper helper = new HttpHelper();
+        json = helper.doGet("http://" + sServidorIP +":"+sServidorPorta+ "/produtos/"+id);
+
+        if (json == null || json.isEmpty()) {
+            if (sServidorIP == null || sServidorIP.isEmpty()) {
+                throw new IOException("IP do servidor não configurado!\nNenhum produto cadastrado no celular.");
+            } else {
+                throw new IOException("Produto não encontrado");
+            }
+        } else {
+            produto = parserJSONProduto(json);
+
+        }
+
+        return produto;
+    }
+
     public static  void setProduto(Produto produto) throws IOException, JSONException {
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");
+
         HttpHelper helper = new HttpHelper();
         helper.setContentType("application/json");
         helper.setCharsetToEncode("UTF-8");
@@ -112,8 +128,11 @@ public class ProdutoService {
         produtoJson.put("dtSaida", produto.getDtSaida());
 
 
-        helper.doPost("http://" + sServidorIP + ":8080/produtos", produtoJson, "UTF-8");
-
+        if (produto.getId() == 0) {
+            helper.doPost("http://" + sServidorIP + ":"+sServidorPorta+"/produtos", produtoJson, "UTF-8");
+        }else {
+            helper.doPut("http://" + sServidorIP + ":"+sServidorPorta+"/produtos/"+produto.getId(), produtoJson, "UTF-8");
+        }
 
 
     }
@@ -121,8 +140,9 @@ public class ProdutoService {
     public static void deleteProduto(Long id) throws IOException {
         HttpHelper httpHelper = new HttpHelper();
         String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");
 
-        httpHelper.doDelete("http://" + sServidorIP + ":8080/produtos/"+id);
+        httpHelper.doDelete("http://" + sServidorIP + ":"+sServidorPorta+"/produtos/"+id);
 
     }
 
@@ -201,6 +221,51 @@ public class ProdutoService {
         return produtos;
     }
 
+    private static Produto parserJSONProduto(String json) {
+
+
+        try {
+            Produto produto = new Produto();
+            // Json objeto não recebe json array!
+
+            JSONObject jsonObj = new JSONObject(json);
+
+
+
+
+            String imagem1 = jsonObj.optString("imagem1");
+            String imagem2 = jsonObj.optString("imagem2");
+            String imagem3 = jsonObj.optString("imagem3");
+            String imagem4 = jsonObj.optString("imagem4");
+            String imagem5 = jsonObj.optString("imagem5");
+
+            Bitmap imagemBitmap1 = IOUtils.decodeBase64(imagem1);
+            Bitmap imagemBitmap2 = IOUtils.decodeBase64(imagem2);
+            Bitmap imagemBitmap3 = IOUtils.decodeBase64(imagem3);
+            Bitmap imagemBitmap4 = IOUtils.decodeBase64(imagem4);
+            Bitmap imagemBitmap5 = IOUtils.decodeBase64(imagem5);
+
+            produto.setId(jsonObj.optLong("id"));
+            produto.setDescricao(jsonObj.optString("descricao"));
+            produto.setPreco(jsonObj.optDouble("valor"));
+            produto.setNome(jsonObj.optString("nome"));
+            produto.setDtEntrada(jsonObj.optString("dtEntrada"));
+            produto.setDtSaida(jsonObj.optString("dtSaida"));
+            produto.addImagens(imagemBitmap1);
+            produto.addImagens(imagemBitmap2);
+            produto.addImagens(imagemBitmap3);
+            produto.addImagens(imagemBitmap4);
+            produto.addImagens(imagemBitmap5);
+
+            return produto;
+
+        } catch (JSONException e) {
+            Log.i("Daniel", e.getMessage());
+
+        }
+
+        return null;
+    }
 
 
 

@@ -1,8 +1,11 @@
 package com.example.cadastroproduto.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,16 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cadastroproduto.R;
 import com.example.cadastroproduto.model.Produto;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterProduto extends RecyclerView.Adapter {
+public class AdapterProduto extends RecyclerView.Adapter implements Filterable {
     public  List<Produto> produtos;
+    public  List<Produto> produtosCopia;
+
     private static ClickListener clickListener;
 
 
     public AdapterProduto(List<Produto> produtosPassados) {
         this.produtos = produtosPassados;
+        this.produtosCopia = produtosPassados;
     }
+
 
     @NonNull
     @Override
@@ -47,6 +55,50 @@ public class AdapterProduto extends RecyclerView.Adapter {
     public int getItemCount() {
         return produtos.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                List<Produto> filteredResults;
+
+                if (constraint.length() == 0) {
+                    filteredResults = produtos;
+                }else {
+                    filteredResults = getFilteredResults(constraint.toString().toLowerCase());
+                }
+
+                results.values = filteredResults;
+
+                return results;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                produtosCopia = (List<Produto>) results.values;
+                notifyDataSetChanged();
+            }
+
+        };
+    }
+
+    public List<Produto> getFilteredResults (String contraint) {
+        List<Produto> results  = new ArrayList<>();
+        for (Produto produto : produtosCopia) {
+            String idProduto = ""+produto.getId();
+            if (produto.getNome().toLowerCase().contains(contraint) || idProduto.toLowerCase().contains(contraint)) {
+                results.add(produto);
+            }
+            idProduto = null;
+        }
+        return results;
+    }
+
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final TextView idProduto;

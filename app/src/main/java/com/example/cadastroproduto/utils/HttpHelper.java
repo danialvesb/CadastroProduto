@@ -188,6 +188,66 @@ public class HttpHelper {
         }
         return s;
     }
+
+    public String doPut(String url, JSONObject jsonParam, String charset) throws IOException {
+        if (LOG_ON) {
+            Log.d(TAG, ">> Http.doPut: " + url);
+        }
+
+        URL u = new URL(url);
+        HttpURLConnection conn = null;
+        String s = null;
+
+        try {
+            conn = (HttpURLConnection) u.openConnection();
+
+            if (contentType != null) {
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept","application/json");
+            }
+
+            conn.setRequestMethod("PUT");
+            conn.setConnectTimeout(TIMEOUT_MILLIS);
+            conn.setReadTimeout(TIMEOUT_MILLIS);
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.connect();
+
+            if (jsonParam != null) {
+                OutputStream out = conn.getOutputStream();
+                DataOutputStream os = new DataOutputStream(out);
+                os.writeBytes(jsonParam.toString());
+                os.flush();
+                os.close();
+            }
+
+            InputStream in = null;
+            int status = conn.getResponseCode();
+
+            if (status >= HttpURLConnection.HTTP_BAD_REQUEST) {
+                Log.d(TAG, "Error code: " + status);
+                in = conn.getErrorStream();
+            } else {
+                in = conn.getInputStream();
+            }
+
+            s = IOUtils.toString(in, charset);
+
+            if (LOG_ON) {
+                Log.d(TAG, "<< Http.doPut: " + s);
+            }
+
+            in.close();
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+        return s;
+    }
+
     public Bitmap doGetBitmap(String url) throws IOException {
         if (LOG_ON) {
             Log.d(TAG, ">> Http.doGet: " + url);

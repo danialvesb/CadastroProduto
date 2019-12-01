@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,7 +22,6 @@ import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.example.cadastroproduto.utils.AlertUtil;
 import com.example.cadastroproduto.utils.IAlertUtil;
-import com.example.cadastroproduto.utils.MoedaUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -31,7 +31,8 @@ import java.util.List;
 public class DetalheProdutoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Bitmap> bitmaps = new ArrayList<>();
-    private List<Produto> listProdutos;
+    Produto produto = new Produto();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +45,24 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         TextView descricao = findViewById(R.id.detalhe_descricao);
         TextView dtEntrada = findViewById(R.id.detalhe_dt_entrada);
         TextView nome = findViewById(R.id.detalhe_nome);
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
 
+        final Produto produtoClicado = (Produto) getIntent().getSerializableExtra("produto");
+        Long idDoProduto = produtoClicado.getId();
+
+
+        try {
+            produto = ProdutoService.getProduto(idDoProduto);
+            this.produto = produto;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 
-        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Detalhe Produto");
+
         bitmaps = produto.getImagens();
 
         String precoS = ""+produto.getPreco();
@@ -69,91 +79,37 @@ public class DetalheProdutoActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(layout);
 
         }
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    ProdutoService.deleteProduto(produto.getId());
-                    Toast.makeText(DetalheProdutoActivity.this, "Produto excluído" ,Toast.LENGTH_LONG).show();
-
-                    mostrarMain();
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
-
     }
 
-    private class TaskGetJsonServidor extends AsyncTask<String,Integer,List<Produto>> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        private void setMensagemRetorno(boolean isAtualizou) {
-            Intent intent = getIntent();
-            intent.putExtra("mensagem", (isAtualizou ? "Sim" : "Não"));
-            setResult(13, intent);
-        }
-
-
-        @Override
-        protected List<Produto> doInBackground(String... params) {
-            listProdutos = new ArrayList<>();
-            listProdutos = null;
-
-            try {
-                listProdutos = ProdutoService.getProdutos(true);
-
-            } catch (IOException e) {
-                listProdutos = null;
-            }
-
-            return listProdutos;
-        }
-
-        @Override
-        protected void onPostExecute(List<Produto> listProdutos) {
-            setMensagemRetorno(listProdutos != null);
-            finish();
-        }
-    }
-
-
-
-    public void clickAtualizar(View view) {
-        AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Atualizar produtos ?", "Sim", "Não", false,
+    public void clickDeletar(View view) {
+        AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Deletar produto ?", "Sim", "Não", false,
                 new IAlertUtil() {
                     @Override
-                    public void PositiveMethod(final DialogInterface dialog, final int id) {
-                        DetalheProdutoActivity.TaskGetJsonServidor taskGetJsonServidor = new DetalheProdutoActivity.TaskGetJsonServidor();
+                    public void PositiveMethod(DialogInterface dialog, int id) {
+                                try {
+                                    final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
-                        taskGetJsonServidor.execute();  // Pode-se passar n argumentos para este método execute que serão recebidos por "String... params" de doInBackground
+                                    ProdutoService.deleteProduto(produto.getId());
+                                    mostrarMain();
+
+                                }catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
                     }
+
                     @Override
                     public void NegativeMethod(DialogInterface dialog, int id) {
+
                     }
                 });
+        }
+
+    public void clickEditar(View view) {
+
+        mostrarCadastroDeProdutos(this.produto);
+
     }
-
-
-
-
-    private void mostrarMain() {
-        Intent intent = new Intent(DetalheProdutoActivity.this,
-                MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
 
 
     @Override
@@ -165,10 +121,67 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void clickVoltar(View view) {
-        finish();
+    private void mostrarCadastroDeProdutos(Produto produto) {
+        Intent intent = new Intent(DetalheProdutoActivity.this, CadastroProdutosActivity.class);
+        intent.putExtra("produto", produto);
+        startActivity(intent);
+        TaskGetJsonServidor taskGetJsonServidor = new TaskGetJsonServidor();
+        taskGetJsonServidor.execute();
+
+
     }
 
+    private void mostrarMain() {
+        Intent intent = new Intent(DetalheProdutoActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        Toast.makeText(this, R.string.produto_deletado, Toast.LENGTH_LONG).show();
+    }
+
+    private void setMensagemRetorno(boolean isAtualizou) {
+        Intent intent = getIntent();
+        intent.putExtra("mensagem", (isAtualizou ? "Sim" : "Não"));
+        setResult(13, intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mostrarMain();
+    }
+
+    private class TaskGetJsonServidor extends AsyncTask<String,Integer,Produto> {
+        final Produto produtoClicado = (Produto) getIntent().getSerializableExtra("produto");
+        Long idProdutoClicado = produtoClicado.getId();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Produto doInBackground(String... params) {
+            produto = new Produto();
+            produto = null;
+
+            try {
+
+                produto = ProdutoService.getProduto(idProdutoClicado);
+
+
+            } catch (IOException e) {
+                produto = null;
+            }
+
+            return produto;
+        }
+
+        @Override
+        protected void onPostExecute(Produto produto) {
+            setMensagemRetorno(produto != null);
+            finish();
+        }
+    }
 
 
 }

@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 
-import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -36,18 +32,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import android.support.v7.app.AppCompatActivity;
 
-
-
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
-    ListView list;
-    ArrayAdapter<Produto> adapter;
+public class MainActivity extends AppCompatActivity {
     SearchView editsearch;
     List<Produto> listProdutos = new ArrayList<>();
     FloatingActionButton fab;
-    Integer inputTypeEditSearch;
+
     RecyclerView recyclerView;
+    AdapterProduto adapterProduto;
 
 
     @Override
@@ -59,16 +51,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //É criada uma thread para executar as requisições
 
         Toolbar toolbar =  findViewById(R.id.toolbar);
-        Toolbar barraInferiorEsquerda = findViewById(R.id.barraInferiorEsquerda);
-        Toolbar barraInferiorDireita = findViewById(R.id.barraInferiorDireita);
 
-        //comentei isso pq estava fazendo o app parar de  funcionar
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setLogo(R.drawable.logoddmprecobar);
         getSupportActionBar().setTitle(getString(R.string.app_full_name));
 
-
-        //Outro erro que estava ocorrendo, eu comentei essa linha para não ter scan, mas comentei o fab também, e ele ficou null,
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,24 +68,35 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         buscaProdutosServidor(true);
 
 
-//        editsearch = findViewById(R.id.search);
+        editsearch = findViewById(R.id.search);
 
+        editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String text) {
+
+                adapterProduto.getFilter().filter(text);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+                adapterProduto.getFilter().filter(text);
+                return true;
+            }
+        });
 
         if (listProdutos != null) {
-//            editsearch.setOnQueryTextListener(this);
             Toast.makeText(this, listProdutos.size() + " produtos cadastrados.", Toast.LENGTH_LONG).show();
 
-
-            AdapterProduto adapterProduto = new AdapterProduto(listProdutos);
             adapterProduto.setOnItemClickListener(new AdapterProduto.ClickListener() {
                 @Override
                 public void onItemClick(int position, View v) {
                     mostraDetalheProduto(listProdutos.get(position));
+
                 }
             });
 
         }
-
 
             //Essa arqui está definindo se
         Boolean bFocoCpoPesquisa = ConfigSharedPreferences.getBoolean(this, "cfgFocoCpoPesquisa");
@@ -108,14 +105,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (false)
             ((CoordinatorLayout.LayoutParams) fab.getLayoutParams()).gravity = Gravity.CENTER | Gravity.BOTTOM;
         else {
-//            list.requestFocus();
+            recyclerView.requestFocus();
         }
 
-//        inputTypeEditSearch = editsearch.getInputType();
 
-        if (inputTypeEditSearch == null) {
-            inputTypeEditSearch = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
-        }
 
     }  // onCreate
 
@@ -130,8 +123,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         if (listProdutos != null) {
-            AdapterProduto adapterProduto = new AdapterProduto(listProdutos);
-
+            adapterProduto = new AdapterProduto(listProdutos);
             recyclerView.setAdapter(adapterProduto);
 
             RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -142,42 +134,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
-
-    //filtro
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        if (listProdutos.contains(query)) {
-            adapter.getFilter().filter(query);
-        } else {
-            if (adapter.getCount() == 1) {
-                Produto produto = (Produto) adapter.getItem(0);
-                mostraDetalheProduto(produto);
-            } else {
-                Toast.makeText(MainActivity.this, adapter.getCount() + " produtos com esta descrição.\n" +
-                        this.getResources().getString(R.string.cliqueprodutodesejadoverdetalhes),Toast.LENGTH_LONG).show();
-            }
-        }
-
-        return false;
-    }
-
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-//        adapter.getFilter().filter(newText);
-
-        if (newText.isEmpty()) {
-//            editsearch.setInputType(inputTypeEditSearch);
-        } else {
-            if (newText.substring(0, 1).matches("[0-9]")) {
-//                editsearch.setInputType(InputType.TYPE_CLASS_NUMBER);
-            } else {
-//                editsearch.setInputType(inputTypeEditSearch);
-            }
-        }
-
-        return true;
-    }
 
 
     //criando o menu;
@@ -300,6 +256,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         intent.putExtra("produto", produto);
         startActivity(intent);
     }
+
+
 
 
 

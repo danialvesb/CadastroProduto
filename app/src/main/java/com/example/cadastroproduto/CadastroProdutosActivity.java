@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +28,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -35,7 +38,9 @@ import com.example.cadastroproduto.adapters.AdapterProduto;
 import com.example.cadastroproduto.adapters.ViewHolderFoto;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
+import com.example.cadastroproduto.utils.AlertUtil;
 import com.example.cadastroproduto.utils.DateUtil;
+import com.example.cadastroproduto.utils.IAlertUtil;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,33 +60,52 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     private Produto produto = new Produto();
     private Bitmap imageBitmap;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private List<Produto> listProdutos;
+    private TextView textViewMsgmAtz;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_produtos);
-
+        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
 
-        FloatingActionButton fabImage = findViewById(R.id.fabImage);
-//        imageView = findViewById(R.id.imageView);
         recyclerView = findViewById(R.id.recyclerViewImagens);
-
-        //Mascáras
+        EditText nome = findViewById(R.id.inputNome);
         EditText preco = findViewById(R.id.inputValor);
+        TextInputEditText descricao = findViewById(R.id.inputDescricao);
 
+        if (produto != null) {
+            if (produto.getNome() != null)
+                nome.setText(produto.getNome());
 
-        SimpleMaskFormatter smf1 = new SimpleMaskFormatter("NNN.NN");
-        MaskTextWatcher mtw1 = new MaskTextWatcher(preco, smf1);
-        preco.addTextChangedListener(mtw1);
+            if (produto.getPreco() != null)
+                preco.setText(produto.getPreco().toString());
+
+            if (produto.getDescricao() != null)
+                descricao.setText(produto.getDescricao());
+
+//            if (produto.getImagens() != null)
+//                recyclerView.setAdapter(new AdaperFoto(produto.getImagens()));
+//                RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//                recyclerView.setLayoutManager(layout);
+
+        }
 
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
 
+        if (produto != null)
+            getSupportActionBar().setTitle(getString(R.string.editar_produto));
+
         getSupportActionBar().setTitle(getString(R.string.cadastroproduto));
+
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -92,28 +116,34 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     }
 
     public void onclickSalvar(View view) {
+        EditText nome = findViewById(R.id.inputNome);
+        EditText preco = findViewById(R.id.inputValor);
+        TextInputEditText descricao = findViewById(R.id.inputDescricao);
+        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
         try {
-            EditText nome = findViewById(R.id.inputNome);
-            EditText preco = findViewById(R.id.inputValor);
-            TextInputEditText descricao = findViewById(R.id.inputDescricao);
-
-            produto.setNome(nome.getText().toString());
-
-            String valor = preco.getText().toString();
-            produto.setPreco(Double.parseDouble(valor));
-            produto.setDescricao(descricao.getText().toString());
+                this.produto.setNome(nome.getText().toString());
+                String valor = preco.getText().toString();
+                this.produto.setPreco(Double.parseDouble(valor));
+                this.produto.setDescricao(descricao.getText().toString());
 
 
-            if(imageBitmap != null)
-                produto.addImagens(imageBitmap);
+                if(imageBitmap != null)
+                    this.produto.addImagens(imageBitmap);
 
-            ProdutoService.setProduto(produto);
+                if (produto == null) {
+                    ProdutoService.setProduto(this.produto);
+                    finish();
 
+                }else {
+                    this.produto.setId(produto.getId());
+                    this.produto.setDtEntrada(produto.getDtEntrada());
+                    this.produto.setDtSaida(produto.getDtSaida());
 
-            Toast.makeText(this, getString(R.string.gravado), Toast.LENGTH_LONG).show();
-            mostrarMain();
+                    ProdutoService.setProduto(this.produto);
+                    clickAtualizar(this.produto);
 
+                }
 
 
         }catch (Exception e) {
@@ -123,32 +153,15 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     }
 
 
+
+
     public void onClickImage(View view) {
         tirarFoto();
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void clickVoltar(View view) {
-        finish();
     }
 
     public void tirarFoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
-    }
-
-    private void mostrarMain() {
-        Intent intent = new Intent(CadastroProdutosActivity.this,
-                MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override
@@ -172,4 +185,73 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            setMensagemRetorno(false);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setMensagemRetorno(boolean isAtualizou) {
+        Intent intent = getIntent();
+        intent.putExtra("mensagem", (isAtualizou ? "Sim" : "Não"));
+        setResult(13, intent);
+    }
+
+
+    private class TaskGetJsonServidor extends AsyncTask<String,Integer,List<Produto>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<Produto> doInBackground(String... params) {
+            listProdutos = new ArrayList<>();
+            listProdutos = null;
+
+            try {
+                listProdutos = ProdutoService.getProdutos(true);
+
+            } catch (IOException e) {
+                listProdutos = null;
+            }
+
+            return listProdutos;
+        }
+
+        @Override
+        protected void onPostExecute(List<Produto> listProdutos) {
+            setMensagemRetorno(listProdutos != null);
+            finish();
+        }
+    }
+
+    public void clickAtualizar(Produto produtoa) {
+        AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Editar produto?", "Sim", "Não", false,
+                new IAlertUtil() {
+                    @Override
+                    public void PositiveMethod(final DialogInterface dialog, final int id) {
+                        TaskGetJsonServidor taskGetJsonServidor = new TaskGetJsonServidor();
+
+                        Intent intent = new Intent(MyApp.getContext(), DetalheProdutoActivity.class);
+                        intent.putExtra("produto", produto);
+                        startActivity(intent);
+                        taskGetJsonServidor.execute();  // Pode-se passar n argumentos para este método execute que serão recebidos por "String... params" de doInBackground
+                        finish();
+                    }
+                    @Override
+                    public void NegativeMethod(DialogInterface dialog, int id) {
+                    }
+                });
+    }
+
+
+
 }

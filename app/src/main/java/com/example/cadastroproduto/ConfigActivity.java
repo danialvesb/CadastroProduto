@@ -21,6 +21,7 @@ import com.example.cadastroproduto.utils.ConfigSharedPreferences;
 
 public class ConfigActivity extends AppCompatActivity {
     private EditText editTextServidorIP;
+    private EditText editTextServidorPorta;
     private Switch switchFocoCpoPesquisa;
     private Switch switchSenhaAcessoCfg;
     private EditText editTextSenhaAdm;
@@ -45,12 +46,18 @@ public class ConfigActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String sServidorIP = ConfigSharedPreferences.getString(this, "cfgServidorIP");
+        String sServidorPorta = ConfigSharedPreferences.getString(this, "cfgServidorPorta");
+
         Boolean bFocoCpoPesquisa = ConfigSharedPreferences.getBoolean(this, "cfgFocoCpoPesquisa");
         Boolean bSenhaAcessoCfg = ConfigSharedPreferences.getBoolean(this, "cfgSenhaAcessoCfg");
         String sSenhaAdm = ConfigSharedPreferences.getString(this, "cfgSenhaAdm");
 
         editTextServidorIP = findViewById(R.id.idServidorIP);
         editTextServidorIP.setText(sServidorIP);
+
+        editTextServidorPorta = findViewById(R.id.id_porta);
+        editTextServidorPorta.setText(sServidorPorta);
+
 
         switchFocoCpoPesquisa = findViewById(R.id.idFocoCpoPesquisa);
         switchFocoCpoPesquisa.setChecked(bFocoCpoPesquisa);
@@ -75,11 +82,13 @@ public class ConfigActivity extends AppCompatActivity {
         // Ao criar uma nova configuração do tipo boolean a mesma é adicionada com valor default true
 
         String sServidorIP = editTextServidorIP.getText().toString();
+        String sServidorPorta = editTextServidorPorta.getText().toString();
         Boolean bFocoCpoPesquisa = switchFocoCpoPesquisa.isChecked();
         Boolean bSenhaAcessoCfg = switchSenhaAcessoCfg.isChecked();
         String sSenhaAdm = editTextSenhaAdm.getText().toString();
 
         ConfigSharedPreferences.setString(this, "cfgServidorIP", sServidorIP);
+        ConfigSharedPreferences.setString(this, "cfgServidorPorta", sServidorPorta);
         ConfigSharedPreferences.setBoolean(this, "cfgFocoCpoPesquisa", bFocoCpoPesquisa);
         ConfigSharedPreferences.setBoolean(this, "cfgSenhaAcessoCfg", bSenhaAcessoCfg);
         ConfigSharedPreferences.setString(this, "cfgSenhaAdm", sSenhaAdm);
