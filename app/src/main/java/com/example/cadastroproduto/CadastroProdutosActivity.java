@@ -142,6 +142,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
                     ProdutoService.setProduto(this.produto);
                     clickAtualizar(this.produto);
+
                 }
 
 

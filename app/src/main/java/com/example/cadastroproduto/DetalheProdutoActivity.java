@@ -61,8 +61,6 @@ public class DetalheProdutoActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Detalhe Produto");
 
         bitmaps = produto.getImagens();
@@ -146,6 +144,11 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         setResult(13, intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mostrarMain();
+    }
 
     private class TaskGetJsonServidor extends AsyncTask<String,Integer,Produto> {
         final Produto produtoClicado = (Produto) getIntent().getSerializableExtra("produto");

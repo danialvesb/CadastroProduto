@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
 
     RecyclerView recyclerView;
-    AdapterProduto adapterProduto = new AdapterProduto(listProdutos);
+    AdapterProduto adapterProduto;
 
 
     @Override
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String text) {
-                
+
                 adapterProduto.getFilter().filter(text);
                 return true;
             }
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(int position, View v) {
                     mostraDetalheProduto(listProdutos.get(position));
+
                 }
             });
 
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (listProdutos != null) {
-
+            adapterProduto = new AdapterProduto(listProdutos);
             recyclerView.setAdapter(adapterProduto);
 
             RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
