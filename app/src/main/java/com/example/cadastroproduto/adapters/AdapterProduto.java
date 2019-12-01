@@ -27,7 +27,7 @@ public class AdapterProduto extends RecyclerView.Adapter implements Filterable {
 
     public AdapterProduto(List<Produto> produtosPassados) {
         this.produtos = produtosPassados;
-        this.produtosCopia = produtosPassados;
+        produtosCopia = new ArrayList<>(produtosPassados);
     }
 
 
@@ -62,16 +62,26 @@ public class AdapterProduto extends RecyclerView.Adapter implements Filterable {
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                List<Produto> filteredResults;
+                List<Produto> filteredList = new ArrayList<>();
 
-                if (constraint.length() == 0) {
-                    filteredResults = produtos;
+
+
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(produtosCopia);
                 }else {
-                    filteredResults = getFilteredResults(constraint.toString().toLowerCase());
-                }
+                    String filterPattern = constraint.toString().toLowerCase().trim();
 
-                results.values = filteredResults;
+                    for (Produto produto : produtosCopia) {
+                        String idProduto = produto.getId()+"";
+                        if (produto.getNome().toLowerCase().contains(filterPattern) || idProduto.toLowerCase().contains(filterPattern)) {
+                            filteredList.add(produto);
+                        }
+                        idProduto = null;
+                    }
+                }
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+
 
                 return results;
             }
@@ -79,24 +89,14 @@ public class AdapterProduto extends RecyclerView.Adapter implements Filterable {
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                produtosCopia = (List<Produto>) results.values;
+                produtos.clear();
+                produtos.addAll((List)results.values);
                 notifyDataSetChanged();
             }
 
         };
     }
 
-    public List<Produto> getFilteredResults (String contraint) {
-        List<Produto> results  = new ArrayList<>();
-        for (Produto produto : produtosCopia) {
-            String idProduto = ""+produto.getId();
-            if (produto.getNome().toLowerCase().contains(contraint) || idProduto.toLowerCase().contains(contraint)) {
-                results.add(produto);
-            }
-            idProduto = null;
-        }
-        return results;
-    }
 
 
 

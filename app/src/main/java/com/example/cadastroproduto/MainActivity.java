@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -67,24 +66,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         buscaProdutosServidor(true);
 
-
-        editsearch = findViewById(R.id.search);
-
-        editsearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String text) {
-
-                adapterProduto.getFilter().filter(text);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String text) {
-                adapterProduto.getFilter().filter(text);
-                return true;
-            }
-        });
-
         if (listProdutos != null) {
             Toast.makeText(this, listProdutos.size() + " produtos cadastrados.", Toast.LENGTH_LONG).show();
 
@@ -140,6 +121,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView =  (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String text) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+                adapterProduto.getFilter().filter(text);
+                return false;
+            }
+        });
+
+
         return true;
     }
 
