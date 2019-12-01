@@ -112,9 +112,11 @@ public class ProdutoService {
         if (produto.getImagens().size() > 0) {
             List<String> imagems = new ArrayList<>();
             List<Bitmap> bitmaps = produto.getImagens();
+            Integer cont = 1;
             for (Bitmap bitmap : bitmaps) {
                 imagems.add(IOUtils.encodeTobase64(bitmap));
-                produtoJson.put("imagem"+produto.getImagens().size(), imagems.get(imagems.size()-1));
+                produtoJson.put("imagem"+cont, imagems.get(cont-1));
+                cont++;
             }
 
         }

@@ -50,12 +50,10 @@
 
     <ImageView
         android:id="@+id/item_imagemProduto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/divider3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintEnd_toEndOf="@+id/divider3"
         app:layout_constraintStart_toEndOf="@+id/item_nomeProduto"
         app:layout_constraintTop_toTopOf="@+id/divider3"
         tools:src="@tools:sample/avatars[0]" />

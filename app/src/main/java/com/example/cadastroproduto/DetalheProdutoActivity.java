@@ -46,8 +46,8 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         TextView dtEntrada = findViewById(R.id.detalhe_dt_entrada);
         TextView nome = findViewById(R.id.detalhe_nome);
 
-        final Produto produtoClicado = (Produto) getIntent().getSerializableExtra("produto");
-        Long idDoProduto = produtoClicado.getId();
+        final Long idDoProduto = (Long) getIntent().getSerializableExtra("Idproduto");
+
 
 
         try {
@@ -87,9 +87,9 @@ public class DetalheProdutoActivity extends AppCompatActivity {
                     @Override
                     public void PositiveMethod(DialogInterface dialog, int id) {
                                 try {
-                                    final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
+                                    final Long idDoProduto = (Long) getIntent().getSerializableExtra("Idproduto");
 
-                                    ProdutoService.deleteProduto(produto.getId());
+                                    ProdutoService.deleteProduto(idDoProduto);
                                     mostrarMain();
 
                                 }catch (Exception e) {
@@ -123,10 +123,11 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
     private void mostrarCadastroDeProdutos(Produto produto) {
         Intent intent = new Intent(DetalheProdutoActivity.this, CadastroProdutosActivity.class);
-        intent.putExtra("produto", produto);
+        intent.putExtra("Idproduto", produto.getId());
         startActivity(intent);
         TaskGetJsonServidor taskGetJsonServidor = new TaskGetJsonServidor();
         taskGetJsonServidor.execute();
+        finish();
 
 
     }
@@ -151,8 +152,7 @@ public class DetalheProdutoActivity extends AppCompatActivity {
     }
 
     private class TaskGetJsonServidor extends AsyncTask<String,Integer,Produto> {
-        final Produto produtoClicado = (Produto) getIntent().getSerializableExtra("produto");
-        Long idProdutoClicado = produtoClicado.getId();
+        final Long idDoProduto = (Long) getIntent().getSerializableExtra("Idproduto");
 
         @Override
         protected void onPreExecute() {
@@ -166,7 +166,7 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
             try {
 
-                produto = ProdutoService.getProduto(idProdutoClicado);
+                produto = ProdutoService.getProduto(idDoProduto);
 
 
             } catch (IOException e) {

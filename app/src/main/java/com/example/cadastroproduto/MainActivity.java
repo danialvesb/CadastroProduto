@@ -252,7 +252,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void mostraDetalheProduto(Produto produto) {
         Intent intent = new Intent(this, DetalheProdutoActivity.class);
-        intent.putExtra("produto", produto);
+
+        intent.putExtra("Idproduto", produto.getId());
         startActivity(intent);
     }
 
