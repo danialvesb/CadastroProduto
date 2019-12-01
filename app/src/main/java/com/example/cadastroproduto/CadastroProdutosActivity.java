@@ -78,6 +78,8 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             try {
                 this.produto.setId(idDoProduto);
                 produto = ProdutoService.getProduto(idDoProduto);
+                this.produto = ProdutoService.getProduto(idDoProduto);
+
             }catch (Exception e) {
                 e.printStackTrace();
             }

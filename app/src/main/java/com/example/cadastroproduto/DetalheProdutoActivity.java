@@ -22,6 +22,7 @@ import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
 import com.example.cadastroproduto.utils.AlertUtil;
 import com.example.cadastroproduto.utils.IAlertUtil;
+import com.example.cadastroproduto.utils.MoedaUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -65,8 +66,8 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
         bitmaps = produto.getImagens();
 
-        String precoS = ""+produto.getPreco();
-        preco.setText(precoS);
+        preco.setText(MoedaUtil.moeda2Decimais(produto.getPreco()));
+
         descricao.setText(produto.getDescricao());
         dtEntrada.setText(produto.getDtEntrada());
         nome.setText(produto.getNome());
