@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onClick(View view) {
                 Intent intent = new Intent(MyApp.getContext(), CadastroProdutosActivity.class);
                 startActivity(intent);
-                finish();
 
             }
         });
@@ -294,7 +293,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Intent intent = new Intent(this, DetalheProdutoActivity.class);
         intent.putExtra("produto", produto);
         startActivity(intent);
-        finish();
     }
 
 

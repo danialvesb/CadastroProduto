@@ -39,7 +39,7 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhe_produto);
 
-//        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.detalhe_imagens);
         TextView preco = findViewById(R.id.detalhe_preco);
         TextView descricao = findViewById(R.id.detalhe_descricao);
@@ -57,13 +57,13 @@ public class DetalheProdutoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//        }
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
 
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle("Detalhe Produto");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Detalhe Produto");
 
         bitmaps = produto.getImagens();
 
@@ -82,15 +82,6 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
         }
     }
-
-    public  void clickMain(View view) {
-        Intent intent = new Intent(DetalheProdutoActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-
-    }
-
-
 
     public void clickDeletar(View view) {
         AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Deletar produto ?", "Sim", "Não", false,

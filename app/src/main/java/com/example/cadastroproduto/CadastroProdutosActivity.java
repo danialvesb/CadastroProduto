@@ -133,8 +133,6 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
                 if (produto == null) {
                     ProdutoService.setProduto(this.produto);
-                    Intent intent = new Intent(CadastroProdutosActivity.this, MainActivity.class);
-                    startActivity(intent);
                     finish();
 
                 }else {
@@ -244,8 +242,8 @@ public class CadastroProdutosActivity extends AppCompatActivity{
                         Intent intent = new Intent(MyApp.getContext(), DetalheProdutoActivity.class);
                         intent.putExtra("produto", produto);
                         startActivity(intent);
-
                         taskGetJsonServidor.execute();  // Pode-se passar n argumentos para este método execute que serão recebidos por "String... params" de doInBackground
+                        finish();
                     }
                     @Override
                     public void NegativeMethod(DialogInterface dialog, int id) {

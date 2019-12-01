@@ -59,7 +59,7 @@ public class ProdutoService {
         } else {
             produtos = parserJSON(json);
 
-            if (produtos == null || produtos.isEmpty()) {
+            if (false) {
                 produtos = getListaProdutosConfiguracao();
             }
             else {
