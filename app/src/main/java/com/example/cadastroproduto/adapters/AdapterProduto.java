@@ -47,7 +47,7 @@ public class AdapterProduto extends RecyclerView.Adapter implements Filterable {
         String id = ""+produto.getId();
         meuViewHolder.idProduto.setText((id));
         meuViewHolder.nomeProduto.setText(produto.getNome());
-        meuViewHolder.imagem.setImageBitmap(produto.getImagens().get(1)); //Sempre vai pegar a primeira pois não precisa mais de uma
+        meuViewHolder.imagem.setImageBitmap(produto.getImagens().get(0)); //Sempre vai pegar a primeira pois não precisa mais de uma
 
     }
 

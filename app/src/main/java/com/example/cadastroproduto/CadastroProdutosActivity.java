@@ -69,8 +69,23 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_produtos);
-        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
+        Produto produto = new Produto();
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
+
+        final Long idDoProduto = (Long) getIntent().getSerializableExtra("Idproduto");
+
+        if (idDoProduto != null) {
+            try {
+                this.produto.setId(idDoProduto);
+                produto = ProdutoService.getProduto(idDoProduto);
+                this.produto = ProdutoService.getProduto(idDoProduto);
+
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
 
         recyclerView = findViewById(R.id.recyclerViewImagens);
         EditText nome = findViewById(R.id.inputNome);
@@ -87,10 +102,10 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             if (produto.getDescricao() != null)
                 descricao.setText(produto.getDescricao());
 
-//            if (produto.getImagens() != null)
-//                recyclerView.setAdapter(new AdaperFoto(produto.getImagens()));
-//                RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-//                recyclerView.setLayoutManager(layout);
+            if (produto.getImagens() != null)
+                recyclerView.setAdapter(new AdaperFoto(produto.getImagens()));
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                recyclerView.setLayoutManager(layout);
 
         }
 
@@ -119,7 +134,6 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         EditText nome = findViewById(R.id.inputNome);
         EditText preco = findViewById(R.id.inputValor);
         TextInputEditText descricao = findViewById(R.id.inputDescricao);
-        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
         try {
                 this.produto.setNome(nome.getText().toString());
@@ -129,16 +143,21 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
 
                 if(imageBitmap != null)
-                    this.produto.addImagens(imageBitmap);
+                    this.produto.getImagens().addAll(listImages);
 
-                if (produto == null) {
+                if (produto.getId() == 0) {
                     ProdutoService.setProduto(this.produto);
                     finish();
 
                 }else {
-                    this.produto.setId(produto.getId());
+                    final Long idDoProduto = (Long) getIntent().getSerializableExtra("Idproduto");
+
+                    this.produto.setId(idDoProduto);
                     this.produto.setDtEntrada(produto.getDtEntrada());
                     this.produto.setDtSaida(produto.getDtSaida());
+                    this.produto.setImagens(listImages);
+                    this.produto.setDtSaida(produto.getDtSaida());
+                    this.produto.setDtEntrada(produto.getDtEntrada());
 
                     ProdutoService.setProduto(this.produto);
                     clickAtualizar(this.produto);
@@ -239,9 +258,10 @@ public class CadastroProdutosActivity extends AppCompatActivity{
                     @Override
                     public void PositiveMethod(final DialogInterface dialog, final int id) {
                         TaskGetJsonServidor taskGetJsonServidor = new TaskGetJsonServidor();
+                        final Long idDoProduto = (Long) getIntent().getSerializableExtra("Idproduto");
 
                         Intent intent = new Intent(MyApp.getContext(), DetalheProdutoActivity.class);
-                        intent.putExtra("produto", produto);
+                        intent.putExtra("Idproduto", idDoProduto);
                         startActivity(intent);
                         taskGetJsonServidor.execute();  // Pode-se passar n argumentos para este método execute que serão recebidos por "String... params" de doInBackground
                         finish();
