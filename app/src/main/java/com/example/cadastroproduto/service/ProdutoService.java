@@ -10,6 +10,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,6 +71,33 @@ public class ProdutoService {
         }
 
         return produtos;
+    }
+
+    public static Produto getProduto(Long id) throws IOException {
+        Produto produto = null;
+        boolean bGet = false;
+        String json = "";
+        String mensagem2 = "";
+
+        String sServidorIP = getString(MyApp.getContext(), "cfgServidorIP");//é possível chamar getString pq é static
+        String sServidorPorta = getString(MyApp.getContext(), "cfgServidorPorta");//é possível chamar getString pq é static
+
+
+        HttpHelper helper = new HttpHelper();
+        json = helper.doGet("http://" + sServidorIP +":"+sServidorPorta+ "/produtos/"+id);
+
+        if (json == null || json.isEmpty()) {
+            if (sServidorIP == null || sServidorIP.isEmpty()) {
+                throw new IOException("IP do servidor não configurado!\nNenhum produto cadastrado no celular.");
+            } else {
+                throw new IOException("Produto não encontrado");
+            }
+        } else {
+            produto = parserJSONProduto(json);
+
+        }
+
+        return produto;
     }
 
     public static  void setProduto(Produto produto) throws IOException, JSONException {
@@ -193,6 +221,51 @@ public class ProdutoService {
         return produtos;
     }
 
+    private static Produto parserJSONProduto(String json) {
+
+
+        try {
+            Produto produto = new Produto();
+            // Json objeto não recebe json array!
+
+            JSONObject jsonObj = new JSONObject(json);
+
+
+
+
+            String imagem1 = jsonObj.optString("imagem1");
+            String imagem2 = jsonObj.optString("imagem2");
+            String imagem3 = jsonObj.optString("imagem3");
+            String imagem4 = jsonObj.optString("imagem4");
+            String imagem5 = jsonObj.optString("imagem5");
+
+            Bitmap imagemBitmap1 = IOUtils.decodeBase64(imagem1);
+            Bitmap imagemBitmap2 = IOUtils.decodeBase64(imagem2);
+            Bitmap imagemBitmap3 = IOUtils.decodeBase64(imagem3);
+            Bitmap imagemBitmap4 = IOUtils.decodeBase64(imagem4);
+            Bitmap imagemBitmap5 = IOUtils.decodeBase64(imagem5);
+
+            produto.setId(jsonObj.optLong("id"));
+            produto.setDescricao(jsonObj.optString("descricao"));
+            produto.setPreco(jsonObj.optDouble("valor"));
+            produto.setNome(jsonObj.optString("nome"));
+            produto.setDtEntrada(jsonObj.optString("dtEntrada"));
+            produto.setDtSaida(jsonObj.optString("dtSaida"));
+            produto.addImagens(imagemBitmap1);
+            produto.addImagens(imagemBitmap2);
+            produto.addImagens(imagemBitmap3);
+            produto.addImagens(imagemBitmap4);
+            produto.addImagens(imagemBitmap5);
+
+            return produto;
+
+        } catch (JSONException e) {
+            Log.i("Daniel", e.getMessage());
+
+        }
+
+        return null;
+    }
 
 
 

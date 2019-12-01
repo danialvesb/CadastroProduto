@@ -28,6 +28,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -36,7 +38,9 @@ import com.example.cadastroproduto.adapters.AdapterProduto;
 import com.example.cadastroproduto.adapters.ViewHolderFoto;
 import com.example.cadastroproduto.model.Produto;
 import com.example.cadastroproduto.service.ProdutoService;
+import com.example.cadastroproduto.utils.AlertUtil;
 import com.example.cadastroproduto.utils.DateUtil;
+import com.example.cadastroproduto.utils.IAlertUtil;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,6 +60,9 @@ public class CadastroProdutosActivity extends AppCompatActivity{
     private Produto produto = new Produto();
     private Bitmap imageBitmap;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private List<Produto> listProdutos;
+    private TextView textViewMsgmAtz;
 
 
     @Override
@@ -64,6 +71,7 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         setContentView(R.layout.activity_cadastro_produtos);
         final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
         Toolbar toolbar = findViewById(R.id.toolbarCadastro);
+
         recyclerView = findViewById(R.id.recyclerViewImagens);
         EditText nome = findViewById(R.id.inputNome);
         EditText preco = findViewById(R.id.inputValor);
@@ -91,7 +99,13 @@ public class CadastroProdutosActivity extends AppCompatActivity{
             setSupportActionBar(toolbar);
         }
 
+        if (produto != null)
+            getSupportActionBar().setTitle(getString(R.string.editar_produto));
+
         getSupportActionBar().setTitle(getString(R.string.cadastroproduto));
+
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -119,19 +133,18 @@ public class CadastroProdutosActivity extends AppCompatActivity{
 
                 if (produto == null) {
                     ProdutoService.setProduto(this.produto);
+                    Intent intent = new Intent(CadastroProdutosActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+
                 }else {
                     this.produto.setId(produto.getId());
                     this.produto.setDtEntrada(produto.getDtEntrada());
                     this.produto.setDtSaida(produto.getDtSaida());
 
-
                     ProdutoService.setProduto(this.produto);
-
+                    clickAtualizar(this.produto);
                 }
-
-
-            mostrarMain();
-
 
 
         }catch (Exception e) {
@@ -147,22 +160,9 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         tirarFoto();
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void tirarFoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 1);
-    }
-
-    private void mostrarMain() {
-        finish();
-        Toast.makeText(this, R.string.salvo, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -186,4 +186,73 @@ public class CadastroProdutosActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            setMensagemRetorno(false);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void setMensagemRetorno(boolean isAtualizou) {
+        Intent intent = getIntent();
+        intent.putExtra("mensagem", (isAtualizou ? "Sim" : "Não"));
+        setResult(13, intent);
+    }
+
+
+    private class TaskGetJsonServidor extends AsyncTask<String,Integer,List<Produto>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected List<Produto> doInBackground(String... params) {
+            listProdutos = new ArrayList<>();
+            listProdutos = null;
+
+            try {
+                listProdutos = ProdutoService.getProdutos(true);
+
+            } catch (IOException e) {
+                listProdutos = null;
+            }
+
+            return listProdutos;
+        }
+
+        @Override
+        protected void onPostExecute(List<Produto> listProdutos) {
+            setMensagemRetorno(listProdutos != null);
+            finish();
+        }
+    }
+
+    public void clickAtualizar(Produto produtoa) {
+        AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Editar produto?", "Sim", "Não", false,
+                new IAlertUtil() {
+                    @Override
+                    public void PositiveMethod(final DialogInterface dialog, final int id) {
+                        TaskGetJsonServidor taskGetJsonServidor = new TaskGetJsonServidor();
+
+                        Intent intent = new Intent(MyApp.getContext(), DetalheProdutoActivity.class);
+                        intent.putExtra("produto", produto);
+                        startActivity(intent);
+
+                        taskGetJsonServidor.execute();  // Pode-se passar n argumentos para este método execute que serão recebidos por "String... params" de doInBackground
+                    }
+                    @Override
+                    public void NegativeMethod(DialogInterface dialog, int id) {
+                    }
+                });
+    }
+
+
+
 }

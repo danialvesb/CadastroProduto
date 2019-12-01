@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,6 +31,7 @@ import java.util.List;
 public class DetalheProdutoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Bitmap> bitmaps = new ArrayList<>();
+    Produto produto = new Produto();
 
 
     @Override
@@ -37,21 +39,32 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhe_produto);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.detalhe_imagens);
         TextView preco = findViewById(R.id.detalhe_preco);
         TextView descricao = findViewById(R.id.detalhe_descricao);
         TextView dtEntrada = findViewById(R.id.detalhe_dt_entrada);
         TextView nome = findViewById(R.id.detalhe_nome);
-        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
 
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
+        final Produto produtoClicado = (Produto) getIntent().getSerializableExtra("produto");
+        Long idDoProduto = produtoClicado.getId();
+
+
+        try {
+            produto = ProdutoService.getProduto(idDoProduto);
+            this.produto = produto;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+//        if (toolbar != null) {
+//            setSupportActionBar(toolbar);
+//        }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Detalhe Produto");
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("Detalhe Produto");
+
         bitmaps = produto.getImagens();
 
         String precoS = ""+produto.getPreco();
@@ -69,6 +82,15 @@ public class DetalheProdutoActivity extends AppCompatActivity {
 
         }
     }
+
+    public  void clickMain(View view) {
+        Intent intent = new Intent(DetalheProdutoActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+
+
 
     public void clickDeletar(View view) {
         AlertUtil.getConfirmDialog(this, AlertUtil.DDM, "Deletar produto ?", "Sim", "Não", false,
@@ -95,14 +117,8 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         }
 
     public void clickEditar(View view) {
-        final Produto produto = (Produto) getIntent().getSerializableExtra("produto");
-        Produto produto2 = new Produto();
 
-        produto2.setId(produto.getId());
-        produto2.setPreco(produto.getPreco());
-        produto2.setDescricao(produto.getDescricao());
-        produto2.setNome(produto.getNome());
-        mostrarCadastroDeProdutos(produto2);
+        mostrarCadastroDeProdutos(this.produto);
 
     }
 
@@ -120,11 +136,57 @@ public class DetalheProdutoActivity extends AppCompatActivity {
         Intent intent = new Intent(DetalheProdutoActivity.this, CadastroProdutosActivity.class);
         intent.putExtra("produto", produto);
         startActivity(intent);
+        TaskGetJsonServidor taskGetJsonServidor = new TaskGetJsonServidor();
+        taskGetJsonServidor.execute();
+
+
     }
 
     private void mostrarMain() {
+        Intent intent = new Intent(DetalheProdutoActivity.this, MainActivity.class);
+        startActivity(intent);
         finish();
         Toast.makeText(this, R.string.produto_deletado, Toast.LENGTH_LONG).show();
+    }
+
+    private void setMensagemRetorno(boolean isAtualizou) {
+        Intent intent = getIntent();
+        intent.putExtra("mensagem", (isAtualizou ? "Sim" : "Não"));
+        setResult(13, intent);
+    }
+
+
+    private class TaskGetJsonServidor extends AsyncTask<String,Integer,Produto> {
+        final Produto produtoClicado = (Produto) getIntent().getSerializableExtra("produto");
+        Long idProdutoClicado = produtoClicado.getId();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Produto doInBackground(String... params) {
+            produto = new Produto();
+            produto = null;
+
+            try {
+
+                produto = ProdutoService.getProduto(idProdutoClicado);
+
+
+            } catch (IOException e) {
+                produto = null;
+            }
+
+            return produto;
+        }
+
+        @Override
+        protected void onPostExecute(Produto produto) {
+            setMensagemRetorno(produto != null);
+            finish();
+        }
     }
 
 

@@ -155,4 +155,5 @@
     <string name="porta_servidor">Porta</string>
     <string name="produto_deletado">Produto deletado</string>
     <string name="salvo">salvo</string>
+    <string name="editar_produto">Editar Produto</string>
 </resources>
